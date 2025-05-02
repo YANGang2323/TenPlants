@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible">
+    android:visibility="visible"
+    tools:context=".CollectionRoomManager">
 
     <LinearLayout
         android:id="@+id/collection"
@@ -32,7 +33,7 @@
             <LinearLayout
                 android:id="@+id/collection_p"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageButton
@@ -41,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/expand_image_button"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/cactus150" />
 
                 <ImageButton
                     android:id="@+id/p_2"
@@ -49,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/expand_image_button"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/cactus150" />
 
                 <ImageButton
                     android:id="@+id/p_3"
@@ -57,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/expand_image_button"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/cactus150" />
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -85,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/expand_image_button"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/cactus150" />
 
                 <ImageButton
                     android:id="@+id/e_2"
@@ -93,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/expand_image_button"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/cactus150" />
 
                 <ImageButton
                     android:id="@+id/e_3"
@@ -101,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/expand_image_button"
-                    android:src="@tools:sample/avatars" />
+                    android:src="@drawable/cactus150" />
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -136,7 +137,7 @@
             android:layout_width="410dp"
             android:layout_height="683dp"
             android:layout_marginTop="25dp"
-            android:src="@tools:sample/avatars"
+            android:src="@drawable/cactus150"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

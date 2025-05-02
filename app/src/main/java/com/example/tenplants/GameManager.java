@@ -12,7 +12,7 @@ public class GameManager {
         dbHelper = new GameDatabaseHelper(context);
     }
 
-    // ✅ 기력 저장
+    // 기력 저장
     public void saveEnergy(int energy) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -21,7 +21,7 @@ public class GameManager {
         db.close();
     }
 
-    // ✅ 기력 불러오기
+    // 기력 불러오기
     public int getEnergy() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT energy FROM PlayerData", null);

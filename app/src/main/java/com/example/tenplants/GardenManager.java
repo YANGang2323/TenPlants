@@ -1,7 +1,18 @@
 package com.example.tenplants;
 
-public class GardenManager {        //둘이 같이
-    //액티비티 버튼들 기능
+import android.os.Bundle;
 
-    //
+import androidx.appcompat.app.AppCompatActivity;
+
+public class GardenManager extends AppCompatActivity {        //같이
+    private GameManager gameManager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.garden);
+
+        gameManager = new GameManager(this);
+
+    }
 }
