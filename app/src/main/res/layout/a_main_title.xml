@@ -106,7 +106,7 @@
         android:visibility="visible">
 
         <Button
-            android:id="@+id/close_option"
+            android:id="@+id/close_seed_selection"
             android:layout_width="61dp"
             android:layout_height="57dp"
             android:background="@android:drawable/ic_menu_close_clear_cancel"
