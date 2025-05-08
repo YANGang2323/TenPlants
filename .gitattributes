@@ -1,0 +1,31 @@
+# ------------------------
+# 텍스트 파일 (LF 줄바꿈 유지)
+# ------------------------
+*.java     text eol=lf
+*.kt       text eol=lf
+*.xml      text eol=lf
+*.gradle   text eol=lf
+*.md       text eol=lf
+*.txt      text eol=lf
+*.gitignore text eol=lf
+*.sh       text eol=lf
+*.yml      text eol=lf
+
+# ------------------------
+# 바이너리 파일 (변환하지 않음)
+# ------------------------
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.gif      binary
+*.ico      binary
+*.zip      binary
+*.jar      binary
+*.keystore binary
+
+# ------------------------
+# 기타 설정
+# ------------------------
+
+# 자동으로 텍스트 파일은 통일된 줄바꿈으로
+* text=auto
