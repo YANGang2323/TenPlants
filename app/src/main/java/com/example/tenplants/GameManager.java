@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 public class GameManager {
     private GameDatabaseHelper dbHelper;
 
+    //식물 개수 10개 되면 점수 체크해서 스토리로 넘기
+
     public GameManager(Context context) {
         dbHelper = new GameDatabaseHelper(context);
     }
