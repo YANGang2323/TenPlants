@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/garden"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GardenManager">
+
+    <ImageView
+        android:id="@+id/plantTable"
+        android:layout_width="411dp"
+        android:layout_height="893dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/story_background"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/presence_online" />
+
+        <TextView
+            android:id="@+id/currentEnergyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="120"
+            android:textAlignment="center"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/recoveryTimeTextView"
+            android:layout_width="12dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="00 : 00"
+            android:textAlignment="center"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/seed"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:text="seed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/hand"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="472dp"
+        android:text="hand"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seed" />
+
+    <Button
+        android:id="@+id/dust"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="55dp"
+        android:text="dust"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hand"
+        app:layout_constraintVertical_bias="0.306" />
+
+    <Button
+        android:id="@+id/light"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="572dp"
+        android:text="light"
+        app:layout_constraintStart_toEndOf="@+id/hand"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/water"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="52dp"
+        android:text="water"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dust"
+        app:layout_constraintTop_toBottomOf="@+id/light"
+        app:layout_constraintVertical_bias="0.306" />
+
+    <Button
+        android:id="@+id/fertilizer"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="572dp"
+        android:text="fertilizer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toEndOf="@+id/light"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/sing"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:text="sing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toEndOf="@+id/water"
+        app:layout_constraintTop_toBottomOf="@+id/fertilizer"
+        app:layout_constraintVertical_bias="0.306" />
+
+    <Button
+        android:id="@+id/current_plant"
+        android:layout_width="152dp"
+        android:layout_height="215dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/plantTable"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/plantTable"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.526" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/blind"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/close_seed_selection"
+            android:layout_width="61dp"
+            android:layout_height="57dp"
+            android:background="@android:drawable/ic_menu_close_clear_cancel"
+            android:text="x"
+            app:layout_constraintBottom_toTopOf="@+id/select_seed"
+            app:layout_constraintEnd_toEndOf="@+id/select_seed" />
+
+        <FrameLayout
+            android:id="@+id/select_seed"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="#FFABABAB"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ScrollView
+                android:layout_width="300dp"
+                android:layout_height="300dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/oneseed"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:text="Button" />
+
+                    <Button
+                        android:id="@+id/twoseed"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:text="Button" />
+
+                    <Button
+                        android:id="@+id/thrseed"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:text="Button" />
+                </LinearLayout>
+            </ScrollView>
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
