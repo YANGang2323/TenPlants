@@ -29,6 +29,7 @@ public class GardenManager extends AppCompatActivity {        //같이
         gameManager = new MyGameManager(this);
         recoveryTimeTextView = findViewById(R.id.recoveryTimeTextView);
         currentEnergyTextView = findViewById(R.id.currentEnergyTextView);
+        var finalAchievementScoreTextView = findViewById(R.id.finalAchievementScoreTextView);
         Button currentPlantButton = findViewById(R.id.current_plant);
         var blind = findViewById(R.id.blind);
         blind.setVisibility(View.INVISIBLE);
@@ -36,7 +37,7 @@ public class GardenManager extends AppCompatActivity {        //같이
         updateCurrentEnergyDisplay(); // 처음 앱 열 때 기력 표시
         startUpdatingRecoveryTime(); // 회복 시간 업데이트 시작
 
-        // 씨앗심기 버튼
+        // 씨앗 버튼
         ((Button)findViewById(R.id.seed)).setOnClickListener(v -> {
             // seed선택창 표시, blind 표시
             blind.setVisibility(View.VISIBLE);
@@ -44,7 +45,7 @@ public class GardenManager extends AppCompatActivity {        //같이
         });
         // 씨앗심기 버튼
         ((Button)findViewById(R.id.close_seed_selection)).setOnClickListener(v -> {
-            // seed선택창 표시, blind 표시
+            // seed선택창 닫기, blind 내림
             blind.setVisibility(View.INVISIBLE);
             Log.i("씨앗","심기창닫기");
         });
@@ -210,5 +211,9 @@ public class GardenManager extends AppCompatActivity {        //같이
             recoveryTimeTextView.setText("00:30");
             currentEnergyTextView.setText("120");
         }
+    }
+    private void updateFinalAchievementScoreDisplay() {
+        int score = gameManager.finalAchievementScore();
+        finalAchievementScoreTextView.setText(String.valueOf(score));
     }
 }

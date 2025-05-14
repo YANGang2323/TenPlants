@@ -275,13 +275,14 @@ public void growPlant(int growthAmount) {
     public int getCurrentPlantStep() {
         return dbHelper.getCurrentPlantStep();
     }
-
     public int getCurrentPlantAchievement() {
         return dbHelper.getCurrentPlantAchievement();
     }
-
     public String getCurrentPlantGrade() {
         return dbHelper.getCurrentPlantGrade();
+    }
+    public int finalAchievementScore() {
+        return dbHelper.getFinalAchievementScore();
     }
 
 }
