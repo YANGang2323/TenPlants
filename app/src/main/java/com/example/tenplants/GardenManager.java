@@ -17,6 +17,7 @@ public class GardenManager extends AppCompatActivity {        //같이
     private MyGameManager gameManager;
     private TextView recoveryTimeTextView;
     private TextView currentEnergyTextView;
+    private TextView finalAchievementScoreTextView;
     private Handler handler = new Handler();
     private GameDatabaseHelper dbHelper;
 
@@ -29,7 +30,7 @@ public class GardenManager extends AppCompatActivity {        //같이
         gameManager = new MyGameManager(this);
         recoveryTimeTextView = findViewById(R.id.recoveryTimeTextView);
         currentEnergyTextView = findViewById(R.id.currentEnergyTextView);
-        var finalAchievementScoreTextView = findViewById(R.id.finalAchievementScoreTextView);
+        finalAchievementScoreTextView = findViewById(R.id.finalAchievementScoreTextView);
         Button currentPlantButton = findViewById(R.id.current_plant);
         var blind = findViewById(R.id.blind);
         blind.setVisibility(View.INVISIBLE);
