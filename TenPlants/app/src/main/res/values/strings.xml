@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TenPlants</string>
+    <string name="expand_image_button">이미지 확대 및 설명 보기</string>
+</resources>
