@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class StoryManager extends AppCompatActivity {     //류수민
+    private MyGameManager gameManager;
     //프로그래밍 기획
     //[구성] 레이아웃 구성
     //[구성] 스토리 파일 - 게임 초기, 게임 엔딩
@@ -26,6 +27,7 @@ public class StoryManager extends AppCompatActivity {     //류수민
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.story);
+        gameManager = new MyGameManager(this);
 
         //스토리 다음으로 넘어가기
         ((Button)findViewById(R.id.story_btn_next)).setOnClickListener(v -> {
@@ -47,10 +49,10 @@ public class StoryManager extends AppCompatActivity {     //류수민
     }
 
     public void showStory(int s_type, int s_num){ //스토리 보여줌
-        
+
         //애니메이션 나오기
-        
-        
+
+
         //스토리 텍스트
         TextView s_text = (TextView)findViewById(R.id.story_text);
         if(s_num < storyText[s_type].length){

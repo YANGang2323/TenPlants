@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible">
+    android:visibility="visible"
+    tools:context=".CollectionRoomManager">
 
     <LinearLayout
         android:id="@+id/collection"
@@ -85,9 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/expand_image_button"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8"
-                    android:src="@drawable/story_ending_1" />
+                    android:src="@drawable/lv0_ficus_pumila" />
 
                 <ImageButton
                     android:id="@+id/e_2"
@@ -95,10 +94,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/expand_image_button"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8"
-                    android:src="@drawable/story_ending_2" />
+                    android:src="@drawable/lv0_ardisia_pusilla" />
 
+                <ImageButton
+                    android:id="@+id/e_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/expand_image_button"
+                    android:src="@drawable/lv0_ficus_pumila" />
             </LinearLayout>
         </HorizontalScrollView>
 
