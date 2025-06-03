@@ -3,6 +3,7 @@ package com.example.tenplants;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -10,22 +11,50 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // MyGameManager 클래스
 public class MyGameManager {
+
     public static final int MAX_ENERGY = 120;
     public static final int RECOVERY_INTERVAL_MS = 30 * 1000; // 30초당 1회복
-
     private GameDatabaseHelper dbHelper;
     private SQLiteDatabase db;
     private Context context;
     private long lastUpdateTime;
 
+    private static MyGameManager instance;
+
+    private List<String> grownPlants = new ArrayList<>();
+
+    private MyGameManager() {}
+
+    public static MyGameManager getInstance() {
+        if (instance == null) {
+            instance = new MyGameManager();
+        }
+        return instance;
+    }
+
+    public void addGrownPlant(String plantName) {
+        if (!grownPlants.contains(plantName)) {
+            grownPlants.add(plantName);
+        }
+    }
+    //27번째 줄부터 여기까지 성장 완료한 식물 추가
+    // (collectionRoom에서 여기 데이터 인식해서 식물 추가)
+
+    public List<String> getGrownPlants() {
+        return new ArrayList<>(grownPlants); // 복사본 반환 (불변성 유지)
+    }
+    //여기까지
+
+
     public MyGameManager(Context context) {
         dbHelper = new GameDatabaseHelper(context);
         db = dbHelper.getWritableDatabase();
         this.context = context;
-
-
     }
 
 
@@ -76,17 +105,17 @@ public class MyGameManager {
     }
 
     // 강제로 저장 (회복 포함 X)
+    // ✅ 기력 저장
     public void saveEnergy(int energy) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id", 1);
         values.put("energy", energy);
-        values.put("lastUpdateTime", System.currentTimeMillis());
         db.insertWithOnConflict("PlayerData", null, values, SQLiteDatabase.CONFLICT_REPLACE);
         db.close();
     }
 
     // 단순 조회 (회복 포함 X)
+    // ✅ 기력 불러오기
     public int getEnergy() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT energy FROM PlayerData WHERE id = 1", null);
@@ -244,6 +273,9 @@ public void growPlant(int growthAmount) {
         db.insert("CompletedPlants", null, values);
 
         Toast.makeText(context, "식물 '" + name + "'이(가) 성장 완료되었습니다!", Toast.LENGTH_SHORT).show();
+        //상장완료된 식물은 collectionRoom에 저장
+
+
         // 식물 10개가 완성됐는지 확인
         Cursor countCursor = db.rawQuery("SELECT COUNT(*) FROM CompletedPlants", null);
         if (countCursor.moveToFirst() && countCursor.getInt(0) >= 10) {
@@ -262,14 +294,28 @@ public void growPlant(int growthAmount) {
         cursor.close();
 
         String ending;
-        if (totalScore >= 270) ending = "전설의 정원사 엔딩";
-        else if (totalScore >= 200) ending = "열정의 정원사 엔딩";
-        else ending = "평범한 정원사 엔딩";
+        int endingID = 1;
+        if (totalScore >= 270){
+            ending = "전설의 정원사 엔딩";
+            endingID = 3;
+        }
+        else if (totalScore >= 200){
+            ending = "열정의 정원사 엔딩";
+            endingID = 2;
+        }
+        else{
+            ending = "평범한 정원사 엔딩";
+            endingID = 1;
+        }
 
         db.execSQL("INSERT INTO UnlockedEndings (ending) VALUES (?)", new Object[]{ending});
 
         // 여기서 엔딩 Activity로 전환 가능
         Toast.makeText(context, "엔딩 진입: " + ending, Toast.LENGTH_LONG).show();
+        //storyManager로 intent
+        Intent endStory = new Intent(context, StoryManager.class);
+        endStory.putExtra("storyType", endingID);
+        context.startActivity(endStory);
     }
 
     public int getCurrentPlantStep() {
@@ -284,6 +330,8 @@ public void growPlant(int growthAmount) {
         return dbHelper.getCurrentPlantGrade();
     }
 
+    public int finalAchievementScore() {
+        return 0;
+    }
 }
-
 

@@ -8,13 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
-
     private static final String DATABASE_NAME = "IdleTycoon.db";
     private static final int DATABASE_VERSION = 1;
+
     public GameDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {//테이블을 생성하는 SQL문장
         db.execSQL("CREATE TABLE PlayerData (id INTEGER PRIMARY KEY, energy INTEGER, lastUpdateTime INTEGER, finalAchievementScore INTEGER)");

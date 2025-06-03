@@ -5,19 +5,20 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 //만들 텍스트.자바 파일목록
 //스토리 스크립트, 식물이름+설명들,
-
 public class MainActivity extends AppCompatActivity {      //둘이 같이, 함수 정의옆에 이름쓰기
     private GameDatabaseHelper dbHelper;
     private MyGameManager gameManager;
     public static final int MAX_ENERGY = 120;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +26,9 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
 
         gameManager = new MyGameManager(this);
         dbHelper = new GameDatabaseHelper(this);
+        var blind = findViewById(R.id.blind);
         var start_scene = findViewById(R.id.start_scene);
         var select_content = findViewById(R.id.select_content);
-        var blind = findViewById(R.id.blind);
         start_scene.setVisibility(View.VISIBLE);
         select_content.setVisibility(View.INVISIBLE);
         blind.setVisibility(View.INVISIBLE);
@@ -68,7 +69,9 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
 
                 // 초기화된 새 게임 시작, story 액티비티로 이동
                 Intent startStoryIntent = new Intent(MainActivity.this, StoryManager.class);
+                startStoryIntent.putExtra("storyType", 0);
                 startActivity(startStoryIntent);
+                finish();
             });
             resetAlertBuilder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
                 @Override
@@ -86,34 +89,27 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
             select_content.setVisibility(View.VISIBLE);
         });
         //옵션 버튼
-        ((Button)findViewById(R.id.game_option)).setOnClickListener(v -> {
+        ((ImageButton)findViewById(R.id.game_option)).setOnClickListener(v -> {
             // 옵션창 표시, blind 표시
             start_scene.setVisibility(View.VISIBLE);
             blind.setVisibility(View.VISIBLE);
         });
-        ((Button)findViewById(R.id.close_seed_selection)).setOnClickListener(v -> {
+        ((ImageButton)findViewById(R.id.close_seed_selection)).setOnClickListener(v -> {
             // 옵션창 닫기, blind 표시
             start_scene.setVisibility(View.VISIBLE);
             blind.setVisibility(View.INVISIBLE);
         });
 
         //content select button
-        ((Button)findViewById(R.id.select_garden)).setOnClickListener(v -> {
+        ((ImageButton)findViewById(R.id.select_garden)).setOnClickListener(v -> {
             // 가든으로 가기
             Intent gardenIntent = new Intent(this, GardenManager.class);
             startActivity(gardenIntent);
             start_scene.setVisibility(View.VISIBLE);
             select_content.setVisibility(View.INVISIBLE);
         });
-        //타이틀 디테일 - 초기화(alert)
-        //인텐트(메인에서 스토리로)
-        ((Button)findViewById(R.id.game_start)).setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(), "게임을 초기화합니다.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, StoryManager.class);
-            startActivity(intent);
-        });
 
-        ((Button)findViewById(R.id.select_collection)).setOnClickListener(v -> {
+        ((ImageButton)findViewById(R.id.select_collection)).setOnClickListener(v -> {
             // collectionRoom 가기
             Intent collectionRoomIntent = new Intent(this, CollectionRoomManager.class);
             startActivity(collectionRoomIntent);
@@ -121,9 +117,26 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
             select_content.setVisibility(View.INVISIBLE);
         });
 
+        //시작 스토리 보고 select_content로 이동
+        Intent get_intent = getIntent();
+        if(get_intent.getStringExtra("message") != null){
+            start_scene.setVisibility(View.INVISIBLE);
+            select_content.setVisibility(View.VISIBLE);
+        }
     }
 
-    //앱 생애주기 onresume
+    //select_content 창일 때 뒤로가기 눌렀을 때 story로 가지 말고 start_scene으로 이동
+    public boolean onKeyDown(int keycode, KeyEvent event) {
+        var start_scene = findViewById(R.id.start_scene);
+        var select_content = findViewById(R.id.select_content);
 
-
+        if(select_content.getVisibility() == View.VISIBLE){
+            if(keycode ==KeyEvent.KEYCODE_BACK) {
+                start_scene.setVisibility(View.VISIBLE);
+                select_content.setVisibility(View.INVISIBLE);
+                return true;
+            }
+        }
+        return false;
+    }
 }
