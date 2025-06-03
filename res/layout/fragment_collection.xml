@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/plant_detail_root"
+    android:layout_width="match_parent"
+    android:layout_height="700dp"
+    android:padding="24dp"
+    android:verticalScrollbarPosition="defaultPosition"
+    app:guidelineUseRtl="true">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="364dp"
+        android:layout_height="658dp"
+        android:scaleY="2"
+        app:srcCompat="@drawable/yellow_box" />
+
+    <ImageButton
+        android:id="@+id/plant_image_button"
+        android:layout_width="184dp"
+        android:layout_height="306dp"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/lv1_trigonotis_peduncularis"
+        android:contentDescription="@string/material_motion_easing_decelerated"/>
+
+    <TextView
+        android:id="@+id/plant_profile_text"
+        android:layout_width="413dp"
+        android:layout_height="371dp"
+        android:layout_gravity="bottom"
+        android:background="#AAFFFFFF"
+        android:padding="12dp"
+        android:text="식물 정보"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+</FrameLayout>
