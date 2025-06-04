@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
             start_scene.setVisibility(View.VISIBLE);
             blind.setVisibility(View.VISIBLE);
         });
-        ((ImageButton)findViewById(R.id.close_seed_selection)).setOnClickListener(v -> {
+        ((Button)findViewById(R.id.close_seed_selection)).setOnClickListener(v -> {
             // 옵션창 닫기, blind 표시
             start_scene.setVisibility(View.VISIBLE);
             blind.setVisibility(View.INVISIBLE);

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -52,50 +54,67 @@ public class collectionFragment extends DialogFragment {
         imageButton.setOnClickListener(v -> {
             // 카드 반전 애니메이션
             flipCard(imageButton, profileText);
-
-            // ViewFlipper 또는 ObjectAnimator 사용 예시
-            //AnimatorSet set = new AnimatorSet();
-            //ObjectAnimator flip1 = ObjectAnimator.ofFloat(imageView, "rotationY", 0f, 90f);
-            //flip1.setDuration(150);
-            //flip1.addListener(new AnimatorListenerAdapter() {
-            //    public void onAnimationEnd(Animator animation) {
-            //        imageView.setImageResource(newImageRes); // 이미지 교체
-            //        profileTextView.setVisibility(View.VISIBLE); // 프로필 노출
-            //    }
-            //});
-            //ObjectAnimator flip2 = ObjectAnimator.ofFloat(imageView, "rotationY", 90f, 180f);
-            //flip2.setDuration(150);
-            //set.playSequentially(flip1, flip2);
-            //set.start();
         });
 
         return view;
     }
 
-    private void flipCard(View imageView, View textView) {
-        AnimatorSet set = new AnimatorSet();
+    // 코드에 따라 이미지 선택
+    private int getImageResourceByCode(String code) {
+        Integer resId = plantImageMap.get(code);
+        return resId != null ? resId : R.drawable.lv0_ardisia_pusilla; // 기본 이미지 fallback
+    }
 
-        ObjectAnimator flipOut = ObjectAnimator.ofFloat(imageView, "rotationY", 0f, 90f);
-        flipOut.setDuration(150);
+    // 프로필 텍스트 설정
+    private String getPlantProfileByCode(String code) {
+        String profile = plantProfileMap.get(code);
+        return profile != null ? profile : "알 수 없는 식물입니다.";
+    }
 
-        flipOut.addListener(new AnimatorListenerAdapter() {
+    //식물 클릭하면 카드 뒤집히는 것처럼 효과 나오고 상세 설명 나옴
+    private void flipCard(View frontView, View backView) {
+        float scale = frontView.getContext().getResources().getDisplayMetrics().density;
+        frontView.setCameraDistance(8000 * scale);
+        backView.setCameraDistance(8000 * scale);
+
+        AnimatorSet flipOut = new AnimatorSet();
+        AnimatorSet flipIn = new AnimatorSet();
+
+        ObjectAnimator frontFlipOut = ObjectAnimator.ofFloat(frontView, "rotationY", 0f, 90f);
+        frontFlipOut.setDuration(200);
+        frontFlipOut.setInterpolator(new AccelerateInterpolator());
+
+        ObjectAnimator backFlipIn = ObjectAnimator.ofFloat(backView, "rotationY", -90f, 0f);
+        backFlipIn.setDuration(200);
+        backFlipIn.setInterpolator(new DecelerateInterpolator());
+
+        frontFlipOut.addListener(new AnimatorListenerAdapter() {
+            @Override
             public void onAnimationEnd(Animator animation) {
-                textView.setVisibility(View.VISIBLE); // 텍스트 보이기
+                frontView.setVisibility(View.GONE);
+                backView.setVisibility(View.VISIBLE);
             }
         });
 
-        ObjectAnimator flipIn = ObjectAnimator.ofFloat(imageView, "rotationY", 90f, 180f);
-        flipIn.setDuration(150);
+        flipOut.play(frontFlipOut);
+        flipIn.play(backFlipIn);
 
-        set.playSequentially(flipOut, flipIn);
-        set.start();
+        flipOut.start();
+        flipOut.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                flipIn.start();
+            }
+        });
     }
 
+    //식물이름에 맞는 이미지 넣기
     private static final Map<String, Integer> plantImageMap = Map.of(
             "plant01", R.drawable.lv0_ficus_pumila,
             "plant02", R.drawable.lv0_sansevieria
     );
 
+    //식물이름에 맞는 설명 띄우기
     private static final Map<String, String> plantProfileMap = Map.of(
             "plant01", "🌿 민들레: 햇빛을 좋아하고 빨리 자라요!",
             "plant02", "🌵 선인장: 물이 적어도 잘 자라요!"

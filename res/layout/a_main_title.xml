@@ -110,15 +110,20 @@
         android:id="@+id/blind"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/game_title_background"
         android:visibility="invisible">
 
-        <ImageButton
+        <Button
             android:id="@+id/close_seed_selection"
-            android:layout_width="61dp"
-            android:layout_height="57dp"
-            android:background="@drawable/btn_back"
-            app:layout_constraintBottom_toTopOf="@+id/option"
-            app:layout_constraintEnd_toEndOf="@+id/option" />
+            android:layout_width="104dp"
+            android:layout_height="39dp"
+            android:background="@drawable/green_box"
+            android:scaleX="2"
+            android:scaleY="1.5"
+            android:text="CLOSE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/option" />
 
         <LinearLayout
             android:id="@+id/option"

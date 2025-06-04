@@ -79,7 +79,7 @@ public class CollectionRoomManager extends AppCompatActivity {
         plantCount++;
     }
 
-    // 뒤로가기 눌렀을 때 story 말고 mainActivity select_content 창으로 이동
+    // 뒤로가기 눌렀을 때 mainActivity select_content 창으로 이동
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {

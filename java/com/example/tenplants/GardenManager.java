@@ -1,12 +1,17 @@
 package com.example.tenplants;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +39,9 @@ public class GardenManager extends AppCompatActivity {        //같이
         Button currentPlantButton = findViewById(R.id.current_plant);
         var blind = findViewById(R.id.blind);
         blind.setVisibility(View.INVISIBLE);
+
+        //애니메이션 로딩
+        Animation growing = AnimationUtils.loadAnimation(this, R.anim.growing);
 
         updateCurrentEnergyDisplay(); // 처음 앱 열 때 기력 표시
         startUpdatingRecoveryTime(); // 회복 시간 업데이트 시작
@@ -114,40 +122,50 @@ public class GardenManager extends AppCompatActivity {        //같이
             }
         });
 
+        //애니메이션 적용할 식물 선언
+        ImageView plant;
+        plant = findViewById(R.id.plant);
+
             //쓰다듬기 버튼
             ((Button) findViewById(R.id.hand)).setOnClickListener(v -> {
                     if(useEnergy(1)) {   //기력 1 사용 및 식물 확인
                         gameManager.growPlant(1);
+                        plant.startAnimation(growing); //성장 애니메이션
                     } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
             // 먼지 털기 버튼
             ((Button) findViewById(R.id.dust)).setOnClickListener(v -> {
                 if(useEnergy(1)) {   //기력 1 사용 및 식물 확인
                     gameManager.growPlant(1);
+                    plant.startAnimation(growing); //성장 애니메이션
                 } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
             // 광합성 버튼
             ((Button) findViewById(R.id.light)).setOnClickListener(v -> {
                 if(useEnergy(2)) {   //기력 2 사용 및 식물 확인
                     gameManager.growPlant(2);
+                    plant.startAnimation(growing); //성장 애니메이션
                 } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
             // 물주기 버튼
             ((Button) findViewById(R.id.water)).setOnClickListener(v -> {
                 if(useEnergy(5)) {   //기력 5 사용 및 식물 확인
                     gameManager.growPlant(5);
+                    plant.startAnimation(growing); //성장 애니메이션
                 } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
             // 비료 주기 버튼
             ((Button) findViewById(R.id.fertilizer)).setOnClickListener(v -> {
                 if(useEnergy(10)) {   //기력 10 사용 및 식물 확인
                     gameManager.growPlant(10);
+                    plant.startAnimation(growing); //성장 애니메이션
                 } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
             // 노래 불러 주기 버튼
             ((Button) findViewById(R.id.sing)).setOnClickListener(v -> {
                 if(useEnergy(15)) {   //기력 15 사용 및 식물 확인
                     gameManager.growPlant(15);
+                    plant.startAnimation(growing); //성장 애니메이션
                 } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
 
@@ -216,5 +234,17 @@ public class GardenManager extends AppCompatActivity {        //같이
     private void updateFinalAchievementScoreDisplay() {
         int score = gameManager.finalAchievementScore();
         finalAchievementScoreTextView.setText(String.valueOf(score));
+    }
+
+    // 뒤로가기 눌렀을 때 mainActivity select_content 창으로 이동
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(GardenManager.this, MainActivity.class);
+            intent.putExtra("message", "select");
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
