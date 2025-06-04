@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
 
     private static final String DATABASE_NAME = "IdleTycoon.db";
@@ -19,7 +22,7 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
     public void onCreate(SQLiteDatabase db) {//테이블을 생성하는 SQL문장
         db.execSQL("CREATE TABLE PlayerData (id INTEGER PRIMARY KEY, energy INTEGER, lastUpdateTime INTEGER, finalAchievementScore INTEGER)");
         db.execSQL("CREATE TABLE CurrentPlants (id INTEGER PRIMARY KEY, name TEXT, grade INTEGER, step INTEGER DEFAULT 0, growth INTEGER, maxGrowth INTEGER)");
-        db.execSQL("CREATE TABLE CompletedPlants (id INTEGER PRIMARY KEY, name TEXT, completedTime INTEGER)");
+        db.execSQL("CREATE TABLE CompletedPlants (id INTEGER PRIMARY KEY, name TEXT, grade INTEGER, completedTime INTEGER)");
         db.execSQL("CREATE TABLE UnlockedPlants (id INTEGER PRIMARY KEY, name TEXT)");
         db.execSQL("CREATE TABLE UnlockedEndings (id INTEGER PRIMARY KEY, ending TEXT)");
         db.execSQL("CREATE TABLE lockedPlants (id INTEGER PRIMARY KEY, name TEXT)");
@@ -61,12 +64,42 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
         return db.insert("CurrentPlants", null, values);
     }
 
+    //set
+    public void setPlayerEnergyToMax(int playerId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 기존 energy 외의 다른 컬럼은 유지하면서 energy만 수정
+        ContentValues values = new ContentValues();
+        values.put("energy", 120);
+
+        db.update("PlayerData", values, "id = ?", new String[]{String.valueOf(playerId)});
+
+        db.close();
+        Log.i("DB_UPDATE", "id가 " + playerId + "인 플레이어의 energy를 120으로 설정했습니다.");
+    }
     //데이터 조회
-    public Cursor getPlayerData() {
+    public int getPlayerScoreData() {
         SQLiteDatabase db = this.getReadableDatabase();
         // PlayerData 테이블에서 데이터를 조회
-        return db.rawQuery("SELECT * FROM PlayerData", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM PlayerData", null);
+        int score = 0;
+        if (cursor.moveToFirst()) {
+            int scoreIndex = cursor.getColumnIndex("finalAchievementScore");
+            if (scoreIndex != -1) {  // 컬럼 존재 확인
+                score = cursor.getInt(scoreIndex);
+            } else {
+                // 컬럼이 없으면 로그 출력 등 처리
+                Log.e("DB_ERROR", "finalAchievementScore 컬럼이 없습니다.");
+            }
+        }
+        cursor.close();
+        return score; //플레이어의 성취도점수반환
     }
+//    public Cursor getPlayerData() {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        // PlayerData 테이블에서 데이터를 조회
+//        return db.rawQuery("SELECT * FROM PlayerData", null);
+//    }
     public Cursor getCurrentPlants() {
         SQLiteDatabase db = this.getReadableDatabase();
         // CurrentPlants 테이블에서 데이터를 조회
@@ -77,6 +110,22 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
         // CompletedPlants 테이블에서 데이터를 조회
         return db.rawQuery("SELECT * FROM CompletedPlants", null);
 
+    }
+    public List<String> getCompletedPlantNames() {
+        List<String> completedPlants = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT name FROM CompletedPlants", null);
+        String completedPlantName = null;
+
+        if (cursor.moveToFirst()) {
+            do {
+                int nameIndex = cursor.getColumnIndex("name");
+                completedPlantName = cursor.getString(nameIndex);
+                completedPlants.add(completedPlantName);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return completedPlants;
     }
     public int getCompletedPlantCount() { //개수
         SQLiteDatabase db = this.getReadableDatabase();
@@ -101,6 +150,7 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
                 return 0;  // 알 수 없는 식물
         }
     }
+
     public String getCurrentPlantName() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT name FROM CurrentPlants", null);
@@ -124,7 +174,6 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
             step = cursor.getInt(stepIndex);
         }
         cursor.close();
-        db.close();
         return step;
     }
 
@@ -138,25 +187,23 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
             finalAchievementScore = cursor.getInt(finalAchievementScoreIndex);
         }
         cursor.close();
-        db.close();
         return finalAchievementScore;
     }
-    public int getCurrentPlantAchievement() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT grade FROM CurrentPlants", null);
-        int achievement = 0;
-
-        if (cursor.moveToFirst()) {
-            int gradeIndex = cursor.getColumnIndex("grade");
-            int grade = cursor.getInt(gradeIndex);
-            if (grade == 0) achievement = 10; // BASIC
-            else if (grade == 1) achievement = 20; // INTERMEDIATE
-            else if (grade == 2) achievement = 30; // ADVANCED
-        }
-        cursor.close();
-        db.close();
-        return achievement;
-    }
+//    public int getCurrentPlantAchievement() {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT grade FROM CurrentPlants", null);
+//        int achievement = 0;
+//
+//        if (cursor.moveToFirst()) {
+//            int gradeIndex = cursor.getColumnIndex("grade");
+//            int grade = cursor.getInt(gradeIndex);
+//            if (grade == 0) achievement = 10; // BASIC
+//            else if (grade == 1) achievement = 20; // INTERMEDIATE
+//            else if (grade == 2) achievement = 30; // ADVANCED
+//        }
+//        cursor.close();
+//        return achievement;
+//    }
 
     public String getCurrentPlantGrade() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -171,40 +218,37 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
             else if (gradeValue == 2) grade = "고급";
         }
         cursor.close();
-        db.close();
         return grade;
     }
-    public int getCurrentPlantGrowth() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT growth FROM CurrentPlants LIMIT 1", null);
-        int growth = 0;
-
-        if (cursor.moveToFirst()) {
-            int growthIndex = cursor.getColumnIndex("growth");
-            growth = cursor.getInt(growthIndex);
-        }
-        cursor.close();
-        db.close();
-        return growth;
-    }
-
-
-    //데이터 업데이트
-    public int updatePlantGrowth(int plantId, int newGrowth) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("growth", newGrowth);
-
-        // 특정 plantId를 가진 식물의 growth를 업데이트
-        return db.update("CurrentPlants", values, "id = ?", new String[]{String.valueOf(plantId)});
-    }
-
-    //데이터 삭제
-    public void deletePlant(int plantId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        // 특정 plantId를 가진 식물을 삭제
-        db.delete("CurrentPlants", "id = ?", new String[]{String.valueOf(plantId)});
-    }
+//    public int getCurrentPlantGrowth() {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT growth FROM CurrentPlants LIMIT 1", null);
+//        int growth = 0;
+//
+//        if (cursor.moveToFirst()) {
+//            int growthIndex = cursor.getColumnIndex("growth");
+//            growth = cursor.getInt(growthIndex);
+//        }
+//        cursor.close();
+//        return growth;
+//    }
+//
+//    //데이터 업데이트
+//    public int updatePlantGrowth(int plantId, int newGrowth) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put("growth", newGrowth);
+//
+//        // 특정 plantId를 가진 식물의 growth를 업데이트
+//        return db.update("CurrentPlants", values, "id = ?", new String[]{String.valueOf(plantId)});
+//    }
+//
+//    //데이터 삭제
+//    public void deletePlant(int plantId) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        // 특정 plantId를 가진 식물을 삭제
+//        db.delete("CurrentPlants", "id = ?", new String[]{String.valueOf(plantId)});
+//    }
 
     //식물성장데이터와 연산
     public void growPlant(int addGrowth) {
@@ -214,34 +258,24 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
                 new String[]{name});
 
         if (cursor.moveToFirst()) {
+            int currentGrowthIndex = cursor.getColumnIndex("growth");
+            int currentGrowth = cursor.getInt(currentGrowthIndex);
             int maxGrowthIndex = cursor.getColumnIndex("maxGrowth");
             int maxGrowth = cursor.getInt(maxGrowthIndex);
-
-//            int currentGrowthIndex = cursor.getColumnIndex("growth");
-//            int currentGrowth = cursor.getInt(currentGrowthIndex);
-            int currentGrowth = getCurrentPlantGrowth();
-
             int gradeIndex = cursor.getColumnIndex("grade");
             int grade = cursor.getInt(gradeIndex);
-//            int stepIndex = cursor.getColumnIndex("step");
-//            int step = cursor.getInt(stepIndex);
-            int step = getCurrentPlantStep();
+            int stepIndex = cursor.getColumnIndex("step");
+            int step = cursor.getInt(stepIndex);
 
-            int scoreIndex = cursor.getColumnIndex("finalAchievementScore");
-            int finalAchievementScore = 0;
-            if (scoreIndex != -1) {
-                finalAchievementScore = cursor.getInt(scoreIndex);
-            } else {
-                Log.e("DatabaseError", "CurrentPlants 테이블에 'finalAchievementScore' 열이 없음!");
-            }
             // 성장도 증가 (초과 성장 시 초과분 이월)
             int newGrowth = currentGrowth + addGrowth;
             if (newGrowth > maxGrowth) {
                 newGrowth = maxGrowth;  //최대성장
             }
+            int maxGrowth2 = maxGrowth; int newGrowth2 = newGrowth;
             int newStep = calculatePlantStep(newGrowth, grade);
 
-            if (newGrowth >= maxGrowth) {
+            if (newGrowth2 >= maxGrowth2) {
                 // 성장 완료 처리 (CompletePlants 테이블로 이동)
                 ContentValues completedValues = new ContentValues();
                 completedValues.put("name", name);
@@ -251,24 +285,24 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
                 // 현재 식물 삭제
                 db.delete("CurrentPlants", "name = ?", new String[]{name});
                 Log.i("PlantGrowth", name + "가 최대 성장에 도달하여 완료됨!");
+//                // 성취도 점수 누적
+//                ContentValues updateFinalValues = new ContentValues();
+//                finalAchievementScore += accumulateAchievement(grade);
+//                updateFinalValues.put("finalAchievementScore", finalAchievementScore);
+//
+//                Log.i("finalAchievementScore", "총 획득한 성취도가" + finalAchievementScore + "으로 업데이트됨.");
                 // 성취도 점수 누적
-                ContentValues updateFinalValues = new ContentValues();
-                finalAchievementScore += accumulateAchievement(grade);
-                updateFinalValues.put("finalAchievementScore", finalAchievementScore);
-
-                Log.i("finalAchievementScore", "총 획득한 성취도가" + finalAchievementScore + "으로 업데이트됨.");
-
+                accumulateAchievement(grade);
             } else {
                 // 성장도 업데이트
                 ContentValues updateValues = new ContentValues();
-                updateValues.put("growth", newGrowth);
+                updateValues.put("growth", newGrowth2);
                 updateValues.put("step", newStep);
                 db.update("CurrentPlants", updateValues, "name = ?", new String[]{name});
-                Log.i("PlantGrowth", name + "의 성장도가 " + newGrowth + "으로 업데이트됨, 단계: " + newStep);
+                Log.i("PlantGrowth", name + "의 성장도가 " + newGrowth2 + "으로 업데이트됨, 단계: " + newStep);
             }
         }
         cursor.close();
-        db.close();
     }
     public int calculatePlantStep(int growth, int grade) {
         int step = 0;
@@ -302,24 +336,30 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
             case 2: // ADVANCED
                 achievementPoints = 30;
                 break;
+            default:
+                Log.w("accumulateAchievement", "알 수 없는 등급: " + grade);
+                return getFinalAchievementScore(); // 오류 발생 시 기존 점수 반환
         }
+
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT finalAchievementScore FROM PlayerData", null);
 
+        int currentScore = 0;
+        int updatedScore = 0;
+
         if (cursor.moveToFirst()) {
             int currentScoreIndex = cursor.getColumnIndex("finalAchievementScore");
-            int currentScore = cursor.getInt(currentScoreIndex);
-            int updatedScore = currentScore + achievementPoints;
+            currentScore = cursor.getInt(currentScoreIndex);
+            updatedScore = currentScore + achievementPoints;
 
-            // 성취도 점수 업데이트
             ContentValues values = new ContentValues();
             values.put("finalAchievementScore", updatedScore);
             db.update("PlayerData", values, null, null);
         }
 
         cursor.close();
-        db.close();
-        return achievementPoints;
+
+        return updatedScore; // 누적된 전체 성취도 점수를 반환
     }
 }
 

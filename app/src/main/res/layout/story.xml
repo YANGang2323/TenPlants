@@ -2,14 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textDirection="firstStrong">
 
     <ImageView
         android:id="@+id/story_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="416dp"
+        android:layout_height="845dp"
         android:layout_weight="1"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,15 +26,15 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:id="@+id/story"
-            android:layout_width="411dp"
-            android:layout_height="301dp"
+            android:layout_width="410dp"
+            android:layout_height="325dp"
             android:orientation="vertical"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,35 +46,44 @@
 
             <TextView
                 android:id="@+id/story_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="동해물과백두산이 마르고닳도록 하나님이 보우하사우리나라만세무궁화삼천리화려강산대한사람대한으로길이보전하세"
+                android:background="@drawable/yellow_box"
+                android:paddingStart="45dp"
+                android:paddingTop="35dp"
+                android:paddingEnd="30dp"
+                android:paddingBottom="35dp"
+                android:text="최대 몇 글자까지 들어갈 수 있을까를 실험중.. 이정도면 충분하지 않을까 싶은데. 넉넉한 3문장 정도는 충분히 들어갈 수 있을 것 같은데. 이정도면 충분하지 않을까."
                 android:textAlignment="viewStart"
-                android:textSize="34sp" />
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingEnd="5dp">
 
                 <Button
                     android:id="@+id/story_btn_next"
-                    android:layout_width="290dp"
-                    android:layout_height="match_parent"
-                    android:text="next"
-                    android:textSize="16sp" />
+                    android:layout_width="284dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/yellow_bar"
+                    android:text="next" />
 
                 <Button
                     android:id="@+id/story_btn_skip"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="80dp"
                     android:layout_weight="0.2"
+                    android:background="@drawable/green_box"
                     android:text="skip"
                     android:textSize="16sp" />
 
             </LinearLayout>
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

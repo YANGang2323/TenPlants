@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/game_title_background"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,45 +16,49 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-106dp">
 
-        <Button
+        <ImageButton
             android:id="@+id/game_option"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
-            android:text="option"
+            android:background="@drawable/option"
+            android:contentDescription="@string/app_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ten Plants"
-            android:textSize="34sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <ImageView
+            android:id="@+id/game_title"
+            android:layout_width="348dp"
+            android:layout_height="272dp"
+            android:layout_marginBottom="120dp"
+            app:layout_constraintBottom_toTopOf="@+id/game_start"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.271" />
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/start_title" />
 
         <Button
             android:id="@+id/game_start"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_marginTop="208dp"
+            android:layout_marginTop="200dp"
+            android:background="@drawable/yellow_bar"
             android:text="START"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/game_continue"
             android:layout_width="150dp"
             android:layout_height="50dp"
+            android:background="@drawable/yellow_bar"
             android:text="CONTINUE"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -69,13 +74,14 @@
         android:id="@+id/select_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="invisible">
 
-        <Button
+        <ImageButton
             android:id="@+id/select_garden"
             android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:text="GARDEN"
+            android:layout_height="200dp"
+            android:background="@drawable/to_garden"
+            android:contentDescription="@string/app_name"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,12 +90,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.354" />
 
-        <Button
+        <ImageButton
             android:id="@+id/select_collection"
             android:layout_width="200dp"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             android:layout_marginTop="4dp"
-            android:text="COLLECTION"
+            android:background="@drawable/to_collection_room"
+            android:contentDescription="@string/app_name"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -103,14 +110,13 @@
         android:id="@+id/blind"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="invisible">
 
-        <Button
+        <ImageButton
             android:id="@+id/close_seed_selection"
             android:layout_width="61dp"
             android:layout_height="57dp"
-            android:background="@android:drawable/ic_menu_close_clear_cancel"
-            android:text="x"
+            android:background="@drawable/btn_back"
             app:layout_constraintBottom_toTopOf="@+id/option"
             app:layout_constraintEnd_toEndOf="@+id/option" />
 
@@ -118,8 +124,11 @@
             android:id="@+id/option"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:background="@android:color/holo_orange_light"
+            android:background="@drawable/yellow_box"
             android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingTop="30dp"
+            android:paddingRight="25dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

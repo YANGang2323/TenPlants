@@ -9,11 +9,12 @@
 
     <ImageView
         android:id="@+id/plantTable"
-        android:layout_width="411dp"
-        android:layout_height="893dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_wood_table"
+        android:src="@drawable/garden_background"
         android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +22,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="250dp"
+        android:layout_width="324dp"
         android:layout_height="40dp"
         android:layout_marginTop="40dp"
         android:orientation="horizontal"
@@ -35,13 +36,15 @@
             android:layout_width="28dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/presence_online" />
+            app:srcCompat="@drawable/garden_energy" />
 
         <TextView
             android:id="@+id/currentEnergyTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="11dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/yellow_circle"
+            android:paddingTop="7dp"
             android:text="120"
             android:textAlignment="center"
             android:textSize="16sp" />
@@ -50,110 +53,178 @@
             android:id="@+id/recoveryTimeTextView"
             android:layout_width="12dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_weight="3"
+            android:background="@drawable/green_box"
             android:text="00 : 00"
             android:textAlignment="center"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/finalAchievementScoreTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0" />
+            android:layout_width="10dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:text="0"
+            android:textAlignment="center"
+            android:textSize="16sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/seed"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="36dp"
-        android:text="seed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <Button
-        android:id="@+id/hand"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="472dp"
-        android:text="hand"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seed" />
-
-    <Button
-        android:id="@+id/dust"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="55dp"
-        android:text="dust"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hand"
-        app:layout_constraintVertical_bias="0.306" />
-
-    <Button
-        android:id="@+id/light"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="572dp"
-        android:text="light"
-        app:layout_constraintStart_toEndOf="@+id/hand"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <Button
-        android:id="@+id/water"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="52dp"
-        android:text="water"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dust"
-        app:layout_constraintTop_toBottomOf="@+id/light"
-        app:layout_constraintVertical_bias="0.306" />
-
-    <Button
-        android:id="@+id/fertilizer"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="572dp"
-        android:text="fertilizer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toEndOf="@+id/light"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <Button
-        android:id="@+id/sing"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:text="sing"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toEndOf="@+id/water"
-        app:layout_constraintTop_toBottomOf="@+id/fertilizer"
-        app:layout_constraintVertical_bias="0.306" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/current_plant"
-        android:layout_width="152dp"
-        android:layout_height="215dp"
-        android:text="Button"
+        <Button
+            android:id="@+id/seed"
+            android:layout_width="80dp"
+            android:layout_height="79dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="112dp"
+            android:background="@drawable/garden_seed_0"
+            android:text="seed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/plant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="172dp"
+            android:elevation="3dp"
+            android:scaleX="2"
+            android:scaleY="2"
+            app:layout_constraintBottom_toBottomOf="@+id/current_plant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/lv0_sansevieria" />
+
+        <Button
+            android:id="@+id/current_plant"
+            android:layout_width="152dp"
+            android:layout_height="215dp"
+            android:background="@drawable/pot"
+            android:elevation="2dp"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.61" />
+
+        <Button
+            android:id="@+id/energyreset"
+            android:layout_width="68dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:text="charge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/completeplant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="completePlant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/energyreset" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/plantTable"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/plantTable"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintTop_toTopOf="@+id/plantTable"
+        app:layout_constraintVertical_bias="0.95">
+
+        <LinearLayout
+            android:id="@+id/action1"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="80dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/hand"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/garden_hand"
+                android:text="hand" />
+
+            <Button
+                android:id="@+id/dust"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/garden_dust_remover"
+                android:text="dust" />
+
+            <Button
+                android:id="@+id/light"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/garden_sun"
+                android:text="light" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/action2"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="80dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/water"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/garden_water"
+                android:text="water" />
+
+            <Button
+                android:id="@+id/fertilizer"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/garden_fertilizer"
+                android:text="fertilizer" />
+
+            <Button
+                android:id="@+id/sing"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/garden_sing"
+                android:text="sing" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/blind"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:elevation="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/close_seed_selection"
@@ -187,6 +258,7 @@
                         android:id="@+id/oneseed"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
+                        android:elevation="10dp"
                         android:text="Button" />
 
                     <Button

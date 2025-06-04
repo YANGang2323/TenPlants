@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
         start_scene.setVisibility(View.VISIBLE);
         select_content.setVisibility(View.INVISIBLE);
         blind.setVisibility(View.INVISIBLE);
-
+        new Thread(() -> {
         // 새로 시작 버튼
         ((Button) findViewById(R.id.game_start)).setOnClickListener(v -> {
             // 초기화 확인 알림
@@ -84,36 +86,68 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
             select_content.setVisibility(View.VISIBLE);
         });
         //옵션 버튼
-        ((Button)findViewById(R.id.game_option)).setOnClickListener(v -> {
+        ((ImageButton)findViewById(R.id.game_option)).setOnClickListener(v -> {
             // 옵션창 표시, blind 표시
             start_scene.setVisibility(View.VISIBLE);
             blind.setVisibility(View.VISIBLE);
         });
-        ((Button)findViewById(R.id.close_seed_selection)).setOnClickListener(v -> {
+        ((ImageButton)findViewById(R.id.close_seed_selection)).setOnClickListener(v -> {
             // 옵션창 닫기, blind 표시
             start_scene.setVisibility(View.VISIBLE);
             blind.setVisibility(View.INVISIBLE);
         });
 
         //content select button
-        ((Button)findViewById(R.id.select_garden)).setOnClickListener(v -> {
+        ((ImageButton)findViewById(R.id.select_garden)).setOnClickListener(v -> {
             // 가든으로 가기
             Intent gardenIntent = new Intent(this, GardenManager.class);
             startActivity(gardenIntent);
-            start_scene.setVisibility(View.VISIBLE);
-            select_content.setVisibility(View.INVISIBLE);
+            //start_scene.setVisibility(View.VISIBLE);
+            //select_content.setVisibility(View.INVISIBLE);
         });
 
-        ((Button)findViewById(R.id.select_collection)).setOnClickListener(v -> {
+        ((ImageButton)findViewById(R.id.select_collection)).setOnClickListener(v -> {
             // collectionRoom 가기
             Intent collectionRoomIntent = new Intent(this, CollectionRoomManager.class);
             startActivity(collectionRoomIntent);
-            start_scene.setVisibility(View.VISIBLE);
-            select_content.setVisibility(View.INVISIBLE);
+            //start_scene.setVisibility(View.VISIBLE);
+            //select_content.setVisibility(View.INVISIBLE);
         });
 
+        }).start();//스레드
+
+        //시작 스토리 보고 select_content로 이동
+        Intent get_intent = getIntent();
+        if(get_intent.getStringExtra("message") != null){
+            start_scene.setVisibility(View.INVISIBLE);
+            select_content.setVisibility(View.VISIBLE);
+        }
     }
 
+    //select_content 창일 때 뒤로가기 눌렀을 때 story로 가지 말고 start_scene으로 이동
+    public boolean onKeyDown(int keycode, KeyEvent event) {
+        var start_scene = findViewById(R.id.start_scene);
+        var select_content = findViewById(R.id.select_content);
+
+        if(select_content.getVisibility() == View.VISIBLE){
+            if(keycode ==KeyEvent.KEYCODE_BACK) {
+                start_scene.setVisibility(View.VISIBLE);
+                select_content.setVisibility(View.INVISIBLE);
+                return true;
+            }
+        }
+        if(start_scene.getVisibility() == View.VISIBLE && select_content.getVisibility() == View.INVISIBLE){
+            if(keycode ==KeyEvent.KEYCODE_BACK) {
+                new AlertDialog.Builder(this)
+                        .setTitle("앱 종료")
+                        .setMessage("앱을 종료하시겠습니까?")
+                        .setPositiveButton("예", (dialog, which) -> finishAffinity())
+                        .setNegativeButton("아니오", null)
+                        .show();
+            }
+        }
+        return false;
+    }
 
 
     //앱 생애주기 onresume
