@@ -64,6 +64,12 @@ public class SoundManager {
         //게임 시작 버튼 누를 때
         soundEffects.put("story_start", soundPool.load(context, R.raw.storystart, 1));
 
+        //게임 중 경고음
+        soundEffects.put("alert", soundPool.load(context, R.raw.alert, 1));
+
+        //garden이나 collectionRoom으로 이동할 때 문소리
+        soundEffects.put("move_place", soundPool.load(context, R.raw.move_to_garden_collection, 1));
+
         //garden 식물 성장 행위
         soundEffects.put("garden_dust", soundPool.load(context, R.raw.gardendust, 1));
         soundEffects.put("garden_fertilizer", soundPool.load(context, R.raw.gardenfertilizer, 1));
@@ -78,7 +84,7 @@ public class SoundManager {
         //식물 성장 완료
         soundEffects.put("garden_plant_grow_max", soundPool.load(context, R.raw.gardenplantgrowmax, 1));
 
-        //성취도? 식물 10개 수집 완료
+        //엔딩으로 이동 = 성취도? 식물 10개 수집 완료
         soundEffects.put("garden_game_clear", soundPool.load(context, R.raw.gardengameclear, 1));
 
         //스토리 엔딩 마지막 버튼 클릭했을 때
@@ -91,7 +97,7 @@ public class SoundManager {
      * 동일한 BGM 요청시 무시.
      */
     public static void playBGM(String bgmKey) {
-        MediaPlayer nextBGM = "menu".equals(bgmKey) ? storyBGM :
+        MediaPlayer nextBGM = "story".equals(bgmKey) ? storyBGM :
                 "game".equals(bgmKey) ? gameBGM : null;
 
         if (nextBGM == null) return;           // 잘못된 키면 무시

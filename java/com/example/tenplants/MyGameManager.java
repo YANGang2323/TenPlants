@@ -276,6 +276,9 @@ public void growPlant(int growthAmount) {
         //상장완료된 식물은 collectionRoom에 저장
 
 
+        //식물 성장 완료
+        SoundManager.playSFX("garden_plant_grow_max");
+
         // 식물 10개가 완성됐는지 확인
         Cursor countCursor = db.rawQuery("SELECT COUNT(*) FROM CompletedPlants", null);
         if (countCursor.moveToFirst() && countCursor.getInt(0) >= 10) {
@@ -310,6 +313,8 @@ public void growPlant(int growthAmount) {
 
         db.execSQL("INSERT INTO UnlockedEndings (ending) VALUES (?)", new Object[]{ending});
 
+        //엔딩으로 이동
+        SoundManager.playSFX("garden_game_clear");
         // 여기서 엔딩 Activity로 전환 가능
         Toast.makeText(context, "엔딩 진입: " + ending, Toast.LENGTH_LONG).show();
         //storyManager로 intent

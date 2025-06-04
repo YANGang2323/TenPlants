@@ -35,6 +35,9 @@ public class StoryManager extends AppCompatActivity {     //류수민
             showStory(storyType, storyNum);
         });
 
+        //게임 스토리 bgm
+        SoundManager.playBGM("story");
+
         //스토리 다음으로 넘어가기
         ((Button)findViewById(R.id.story_btn_next)).setOnClickListener(v -> {
             storyNum++;

@@ -40,6 +40,9 @@ public class GardenManager extends AppCompatActivity {        //같이
         var blind = findViewById(R.id.blind);
         blind.setVisibility(View.INVISIBLE);
 
+        //game bgm
+        SoundManager.playBGM("game");
+
         //애니메이션 로딩
         Animation growing = AnimationUtils.loadAnimation(this, R.anim.growing);
 
@@ -66,6 +69,8 @@ public class GardenManager extends AppCompatActivity {        //같이
             seedAlertBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    //씨앗 심기 효과음
+                    SoundManager.playSFX("garden_seeding");
                     // 씨앗심기
                     int result = 0;
                     gameManager.updateCurrentPlant(GardenManager.this, "Rose", result);
@@ -100,6 +105,8 @@ public class GardenManager extends AppCompatActivity {        //같이
                                 .setMessage("현재 키우고 있는 식물이 없습니다!")
                                 .setPositiveButton("확인", null)
                                 .show();
+                //경고 효과음
+                SoundManager.playSFX("alert");
                 Log.e("PlantCheck", "현재 키우고 있는 식물이 없음.");
 
             } else {
@@ -131,6 +138,8 @@ public class GardenManager extends AppCompatActivity {        //같이
                     if(useEnergy(1)) {   //기력 1 사용 및 식물 확인
                         gameManager.growPlant(1);
                         plant.startAnimation(growing); //성장 애니메이션
+                        //쓰다듬기 효과음
+                        SoundManager.playSFX("garden_hand");
                     } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
             // 먼지 털기 버튼
@@ -138,6 +147,8 @@ public class GardenManager extends AppCompatActivity {        //같이
                 if(useEnergy(1)) {   //기력 1 사용 및 식물 확인
                     gameManager.growPlant(1);
                     plant.startAnimation(growing); //성장 애니메이션
+                    //먼지털기 효과음
+                    SoundManager.playSFX("garden_dust");
                 } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
             // 광합성 버튼
@@ -145,6 +156,8 @@ public class GardenManager extends AppCompatActivity {        //같이
                 if(useEnergy(2)) {   //기력 2 사용 및 식물 확인
                     gameManager.growPlant(2);
                     plant.startAnimation(growing); //성장 애니메이션
+                    //광합성(빛 on) 효과음
+                    SoundManager.playSFX("garden_light_on");
                 } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
             // 물주기 버튼
@@ -152,6 +165,8 @@ public class GardenManager extends AppCompatActivity {        //같이
                 if(useEnergy(5)) {   //기력 5 사용 및 식물 확인
                     gameManager.growPlant(5);
                     plant.startAnimation(growing); //성장 애니메이션
+                    //물주기 효과음
+                    SoundManager.playSFX("garden_water");
                 } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
             // 비료 주기 버튼
@@ -159,6 +174,8 @@ public class GardenManager extends AppCompatActivity {        //같이
                 if(useEnergy(10)) {   //기력 10 사용 및 식물 확인
                     gameManager.growPlant(10);
                     plant.startAnimation(growing); //성장 애니메이션
+                    //비료 주기 버튼
+                    SoundManager.playSFX("garden_fertilizer");
                 } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
             // 노래 불러 주기 버튼
@@ -166,6 +183,8 @@ public class GardenManager extends AppCompatActivity {        //같이
                 if(useEnergy(15)) {   //기력 15 사용 및 식물 확인
                     gameManager.growPlant(15);
                     plant.startAnimation(growing); //성장 애니메이션
+                    //노래.. 기타 치는 효과음
+                    SoundManager.playSFX("garden_sing");
                 } else{Toast.makeText(GardenManager.this, "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();}
             });
 
@@ -181,6 +200,8 @@ public class GardenManager extends AppCompatActivity {        //같이
 //                            .setMessage("현재 키우고 있는 식물이 없습니다!")
 //                            .setPositiveButton("확인", null)
 //                            .show();
+                    //경고 효과음
+                    SoundManager.playSFX("alert");
                     Log.e("PlantCheck", "현재 키우고 있는 식물이 없음.");
                     return false;
                 }
@@ -194,6 +215,8 @@ public class GardenManager extends AppCompatActivity {        //같이
                     .setMessage("기력이 부족합니다!")
                     .setPositiveButton("확인", null)
                     .show();
+            //경고 효과음
+            SoundManager.playSFX("alert");
             Log.i("기력", "기력 부족");
             return false;
         }

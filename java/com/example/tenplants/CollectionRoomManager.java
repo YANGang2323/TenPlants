@@ -21,6 +21,8 @@ public class CollectionRoomManager extends AppCompatActivity {
 
         TableLayout tableLayout = findViewById(R.id.plant_table);
 
+        //game bgm
+        SoundManager.playBGM("game");
 
         // gameManager에서 성장완료된 식물 정보 읽기
         List<String> plantNames = MyGameManager.getInstance().getGrownPlants();
