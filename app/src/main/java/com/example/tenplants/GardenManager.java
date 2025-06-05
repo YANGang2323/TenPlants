@@ -3,6 +3,7 @@ package com.example.tenplants;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,15 +12,34 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class GardenManager extends AppCompatActivity {        //같이
+    private static final Map<Integer, String[]> plantByGrade = new HashMap<>();
+
+    static {
+        plantByGrade.put(0, new String[]{
+                "ardisia_pusilla", "ficus_pusilla", "sansevieria"
+        });
+        plantByGrade.put(1, new String[]{
+                "geranium_palustre", "kerria_japonica", "trigonotis_peduncularis",
+                "eglantine", "narcissus"
+        });
+        plantByGrade.put(2, new String[]{
+                "coreopsis_basalis", "lavandula_angustifolia",
+                "pansy", "rhododendron_schlippenbachii"
+        });
+    }
     private MyGameManager gameManager;
     private TextView recoveryTimeTextView;
     private TextView currentEnergyTextView;
@@ -38,12 +58,14 @@ public class GardenManager extends AppCompatActivity {        //같이
         currentEnergyTextView = findViewById(R.id.currentEnergyTextView);
         finalAchievementScoreTextView = findViewById(R.id.finalAchievementScoreTextView);
         Button currentPlantButton = findViewById(R.id.current_plant);
+
         var blind = findViewById(R.id.blind);
         blind.setVisibility(View.INVISIBLE);
 
         updateCurrentEnergyDisplay(); // 처음 앱 열 때 기력 표시
         //startUpdatingRecoveryTime(); // 회복 시간 업데이트 시작
         updateFinalAchievementScoreDisplay(); //플레이어의 성취도 업데이트
+        setPlantImage();
 
 
         gameManager.setOnPlantGrowthListener(new MyGameManager.OnPlantGrowthListener() {
@@ -81,6 +103,10 @@ public class GardenManager extends AppCompatActivity {        //같이
             Log.i("씨앗", "심기창닫기");
         });
 
+
+
+
+        //씨앗1 심기
         ((Button) findViewById(R.id.oneseed)).setOnClickListener(v -> {
             AlertDialog.Builder seedAlertBuilder = new AlertDialog.Builder(this);
             seedAlertBuilder.setTitle(" ");
@@ -89,13 +115,67 @@ public class GardenManager extends AppCompatActivity {        //같이
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // 씨앗심기
-                    int result = 0;
-                    gameManager.updateCurrentPlant(GardenManager.this, "Rose", result);
-                    if (result == 1 || result == 0) {
-                        currentPlantButton.setText("Rose");
-                    }
-                    Log.i("씨앗", "심기");
-
+//                    int result = 0;
+//                    gameManager.updateCurrentPlant(GardenManager.this, "Rose", result);
+//                    if (result == 1 || result == 0) {
+//                        currentPlantButton.setText("Rose");
+//                    }
+//                    Log.i("씨앗", "심기");
+                    planting(0);
+                }
+            });
+            seedAlertBuilder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // 닫기
+                }
+            });
+            AlertDialog seedAlert = seedAlertBuilder.create();
+            seedAlert.show();
+        });
+        //씨앗2 심기
+        ((Button) findViewById(R.id.twoseed)).setOnClickListener(v -> {
+            AlertDialog.Builder seedAlertBuilder = new AlertDialog.Builder(this);
+            seedAlertBuilder.setTitle(" ");
+            seedAlertBuilder.setMessage("씨앗을 심으시겠습니까?");
+            seedAlertBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // 씨앗심기
+//                    int result = 0;
+//                    gameManager.updateCurrentPlant(GardenManager.this, "Rose", result);
+//                    if (result == 1 || result == 0) {
+//                        currentPlantButton.setText("Rose");
+//                    }
+//                    Log.i("씨앗", "심기");
+                    planting(1);
+                }
+            });
+            seedAlertBuilder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // 닫기
+                }
+            });
+            AlertDialog seedAlert = seedAlertBuilder.create();
+            seedAlert.show();
+        });
+        //씨앗3 심기
+        ((Button) findViewById(R.id.thrseed)).setOnClickListener(v -> {
+            AlertDialog.Builder seedAlertBuilder = new AlertDialog.Builder(this);
+            seedAlertBuilder.setTitle(" ");
+            seedAlertBuilder.setMessage("씨앗을 심으시겠습니까?");
+            seedAlertBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // 씨앗심기
+//                    int result = 0;
+//                    gameManager.updateCurrentPlant(GardenManager.this, "Rose", result);
+//                    if (result == 1 || result == 0) {
+//                        currentPlantButton.setText("Rose");
+//                    }
+//                    Log.i("씨앗", "심기");
+                    planting(2);
                 }
             });
             seedAlertBuilder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
@@ -149,6 +229,7 @@ public class GardenManager extends AppCompatActivity {        //같이
         ((Button) findViewById(R.id.hand)).setOnClickListener(v -> {
             if (useEnergy(1)) {   //기력 1 사용 및 식물 확인
                 gameManager.growPlant(1);
+                removePlantImage();
             } else {
 //                Toast.makeText(GardenManager.this,
 //                        "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();
@@ -161,6 +242,7 @@ public class GardenManager extends AppCompatActivity {        //같이
             if (useEnergy(1)) {   //기력 1 사용 및 식물 확인
                 new Thread(() -> {
                 gameManager.growPlant(1);
+                    removePlantImage();
                 }).start();
             } else {
 //                Toast.makeText(GardenManager.this,
@@ -173,6 +255,7 @@ public class GardenManager extends AppCompatActivity {        //같이
             if (useEnergy(2)) {   //기력 2 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(2);
+                    removePlantImage();
                 }).start();
             } else {
 //                Toast.makeText(GardenManager.this,
@@ -185,6 +268,7 @@ public class GardenManager extends AppCompatActivity {        //같이
             if (useEnergy(5)) {   //기력 5 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(5);
+                    removePlantImage();
                 }).start();
             } else {
 //                Toast.makeText(GardenManager.this,
@@ -197,6 +281,7 @@ public class GardenManager extends AppCompatActivity {        //같이
             if (useEnergy(10)) {   //기력 10 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(10);
+                    removePlantImage();
                 }).start();
             } else {
 //                Toast.makeText(GardenManager.this,
@@ -209,6 +294,7 @@ public class GardenManager extends AppCompatActivity {        //같이
             if (useEnergy(15)) {   //기력 15 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(15);
+                    removePlantImage();
                 }).start();
             } else {
 
@@ -220,6 +306,69 @@ public class GardenManager extends AppCompatActivity {        //같이
         ((Button) findViewById(R.id.completeplant)).setOnClickListener(v -> {
             displayCompletedPlantsAndScore();
         });
+    }
+
+    public void setPlantImage() {
+        ImageView plantView = findViewById(R.id.plant);
+        Cursor cursor = dbHelper.getCurrentPlants();
+
+        if (cursor.moveToFirst()) {
+            String name = dbHelper.getCurrentPlantName();
+            int grade = dbHelper.getCurrentPlantGradeInt();
+            String gradeStr = String.valueOf(grade);
+            if (name != null && grade != 0) {
+                try {
+
+                    String drawableName = "lv" + grade + "_" + name;
+                    int resId = getResources().getIdentifier(drawableName, "drawable", getPackageName());
+
+                    if (resId != 0) {
+                        plantView.setImageResource(resId);
+                    } else {
+                        Log.e("식물", "리소스 없음: " + drawableName);
+                    }
+                } catch (NumberFormatException e) {
+                    Log.e("식물", "등급 파싱 오류: " + gradeStr);
+                }
+            } else {
+                Log.e("식물", "이름 또는 등급이 null임 (name=" + name + ", grade=" + gradeStr + ")");
+            }
+        } else {
+            Log.i("식물", "현재 심어진 식물 없음");
+            plantView.setImageResource(android.R.color.transparent); // 이미지 제거
+        }
+
+        cursor.close(); // 커서 꼭 닫아주세요
+    }
+    public void planting(int targetGrade){
+        ImageView plantView = findViewById(R.id.plant);
+        Random random = new Random();
+        //int targetGrade = 0; // 예: 중급 식물만 선택하고 싶을 경우 (0=초급, 1=중급, 2=고급)
+
+        String[] selectedGradeList = plantByGrade.get(targetGrade);
+        String selectedPlantName = selectedGradeList[random.nextInt(selectedGradeList.length)];
+        String drawableName = "lv" + targetGrade + "_" + selectedPlantName;
+        Log.e("drawableName", "심을식물: " + drawableName);
+// DB에 심기
+        int result = 0;
+        result = gameManager.updateCurrentPlant(GardenManager.this, selectedPlantName, result);
+
+// 성공 시 이미지 업데이트
+        if (result == 1) {
+            int resId = getResources().getIdentifier(drawableName, "drawable", getPackageName());
+            plantView.setImageResource(resId);
+            //plantNameTextView.setText(selectedPlantName.replace("_", " ")); // 보기 좋게 이름 포맷
+        }
+    }
+    public void removePlantImage() {
+        ImageView plantView = findViewById(R.id.plant);
+        Cursor cursor = dbHelper.getCurrentPlants();
+
+        if (cursor == null) {
+            Log.i("식물", "현재 심어진 식물 없음");
+            plantView.setImageResource(android.R.color.transparent); // 이미지 제거
+        }
+        cursor.close(); // 커서 꼭 닫아주세요
     }
 
     private void checkGameEndingCondition() {

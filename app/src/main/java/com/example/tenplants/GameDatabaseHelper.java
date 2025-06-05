@@ -140,13 +140,26 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
     public int getMaxGrowth(String plantName) {
         switch (plantName) {
             case "Rose":
-            case "Tulip":
-                return 100;  // BASIC
-            case "Cactus":
-                return 240;  // INTERMEDIATE
-            case "Orchid":
-                return 300;  // ADVANCED
+            case "ardisia_pusilla":
+            case "ficus_pusilla":
+            case "sansevieria":
+                return 100;  // BASIC 초급
+
+            case "geranium_palustre":
+            case "kerria_japonica":
+            case "trigonotis_peduncularis":
+            case "eglantine":
+            case "narcissus":
+                return 240;  // INTERMEDIATE 중급
+
+            case "coreopsis_basalis":
+            case "lavandula_angustifolia":
+            case "pansy":
+            case "rhododendron_schlippenbachii":
+                return 300;  // ADVANCED 고급
+
             default:
+                Log.i("씨앗", "해당없음");
                 return 0;  // 알 수 없는 식물
         }
     }
@@ -216,6 +229,18 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
             if (gradeValue == 0) grade = "초급";
             else if (gradeValue == 1) grade = "중급";
             else if (gradeValue == 2) grade = "고급";
+        }
+        cursor.close();
+        return grade;
+    }
+    public Integer getCurrentPlantGradeInt() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT grade FROM CurrentPlants", null);
+        int grade = 0;
+
+        if (cursor.moveToFirst()) {
+            int gradeIndex = cursor.getColumnIndex("grade");
+            grade = cursor.getInt(gradeIndex);
         }
         cursor.close();
         return grade;

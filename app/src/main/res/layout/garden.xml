@@ -220,7 +220,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="10dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -231,23 +231,23 @@
             android:layout_width="61dp"
             android:layout_height="57dp"
             android:background="@android:drawable/ic_menu_close_clear_cancel"
-            android:text="x"
             app:layout_constraintBottom_toTopOf="@+id/select_seed"
             app:layout_constraintEnd_toEndOf="@+id/select_seed" />
 
         <FrameLayout
             android:id="@+id/select_seed"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:background="#FFABABAB"
+            android:layout_width="380dp"
+            android:layout_height="362dp"
+            android:background="@drawable/yellow_box"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ScrollView
-                android:layout_width="300dp"
-                android:layout_height="300dp">
+                android:layout_width="310dp"
+                android:layout_height="278dp"
+                android:layout_margin="39dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -258,20 +258,25 @@
                         android:id="@+id/oneseed"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
+                        android:background="@drawable/yellow_bar"
                         android:elevation="10dp"
-                        android:text="Button" />
+                        android:foregroundGravity="center"
+                        android:text="seed1" />
 
                     <Button
                         android:id="@+id/twoseed"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:text="Button" />
+                        android:background="@drawable/yellow_bar"
+                        android:text="seed2" />
 
                     <Button
                         android:id="@+id/thrseed"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:text="Button" />
+                        android:background="@drawable/yellow_bar"
+                        android:text="seed3" />
+
                 </LinearLayout>
             </ScrollView>
         </FrameLayout>

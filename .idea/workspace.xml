@@ -39,83 +39,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9c91b9c-80d1-417a-adab-8aae88c1fea1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/SoundManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/collectionFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/growing.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/btn_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/btn_left.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/btn_right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/collectionroom_background.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/game_title_background.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_background.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_dust_remover.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_energy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_fertilizer.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_fragment.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_hand.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_seed_0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_seed_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_seed_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_sing.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_sun.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/garden_water.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/green_box.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/option.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/start_title.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/to_collection_room.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/to_garden.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/yellow_bar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/yellow_box.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/yellow_circle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_collection.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/andthisishowitends.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/bgmstory.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/bgmtitlegardencollection.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/gardendust.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/gardenfertilizer.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/gardengameclear.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/gardenhand.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/gardenlighton.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/gardenplantgrowmax.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/gardenseeding.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/gardensing.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/gardenwater.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/storystart.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TenPlants/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TenPlants/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TenPlants/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TenPlants/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/CollectionRoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/CollectionRoomManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/GameDatabaseHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/GameDatabaseHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/GardenManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/GardenManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/MyGameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/MyGameManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/StoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/StoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg_wood_table.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/cactus150.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_foreground.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv0_ardisia_pusilla.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv0_ardisia_pusilla.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv0_ficus_pumila.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv0_ficus_pumila.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv0_sansevieria.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv0_sansevieria.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv1_geranium_palustre.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv1_geranium_palustre.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv1_kerria_japonica.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv1_kerria_japonica.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv1_trigonotis_peduncularis.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv1_trigonotis_peduncularis.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_coreopsis_basalis.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_coreopsis_basalis.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_eglantine.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_eglantine.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_lavandula_angustifolia.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_lavandula_angustifolia.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_narcissus.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_narcissus.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_pansy.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_pansy.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_rhododendron_schlippenbachii.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_rhododendron_schlippenbachii.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/pot.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/story_background.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/story_background.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/story_ending_1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/story_ending_1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/story_ending_2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/story_ending_2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/a_main_title.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/a_main_title.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/collection_room.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/collection_room.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_eglantine.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv1_eglantine.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_narcissus.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv1_narcissus.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_pansy.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_pansy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_rhododendron_schlippenbachii.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_rhododendron_schlippenbachii.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/garden.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/garden.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/story.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/story.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/themes-night/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -363,12 +302,12 @@
       <map>
         <entry key="com.example.tenplants">
           <value>
-            <CheckInfo lastCheckTimestamp="1748978405779" />
+            <CheckInfo lastCheckTimestamp="1749064811927" />
           </value>
         </entry>
         <entry key="com.example.tenplants.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1748978405790" />
+            <CheckInfo lastCheckTimestamp="1749064811926" />
           </value>
         </entry>
       </map>

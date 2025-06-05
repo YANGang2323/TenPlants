@@ -17,6 +17,7 @@ import java.util.List;
 
 // MyGameManager 클래스
 public class MyGameManager {
+
     public static final int MAX_ENERGY = 120;
     public static final int RECOVERY_INTERVAL_MS = 30 * 1000; // 30초당 1회복
 
@@ -51,6 +52,11 @@ public class MyGameManager {
         return new ArrayList<>(grownPlants); // 복사본 반환 (불변성 유지)
     }
     //여기까지
+
+
+
+
+
 
     // 기력 회복 포함한 최신 기력 불러오기
     public int updateEnergyWithRecovery() {
@@ -129,6 +135,7 @@ public class MyGameManager {
         return remainingTime;
     }
 
+
     //성장도 로직
     //씨앗심고 현재식물 업데이트
     public int updateCurrentPlant(Context context, String name, int result){
@@ -138,14 +145,23 @@ public class MyGameManager {
             int grade;
             switch (name) {
                 case "Rose":
-                case "Tulip":
-                    grade = 0; // BASIC
+                case "ardisia_pusilla":
+                case "ficus_pusilla":
+                case "sansevieria":
+                    grade = 0; // BASIC 초급
                     break;
-                case "Cactus":
-                    grade = 1; // INTERMEDIATE
+                case "geranium_palustre":
+                case "kerria_japonica":
+                case "trigonotis_peduncularis":
+                case "eglantine":
+                case "narcissus":
+                    grade = 1; // INTERMEDIATE 중급
                     break;
-                case "Orchid":
-                    grade = 2; // ADVANCED
+                case "coreopsis_basalis":
+                case "lavandula_angustifolia":
+                case "pansy":
+                case "rhododendron_schlippenbachii":
+                    grade = 2; // ADVANCED 고급
                     break;
                 default:
                     Log.i("씨앗", "해당없음");
@@ -188,6 +204,7 @@ public class MyGameManager {
     public void setOnPlantGrowthListener(OnPlantGrowthListener listener) {
         this.growthListener = listener;
     }
+
 
     public void growPlant(int addGrowth) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
