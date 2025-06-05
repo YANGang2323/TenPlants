@@ -11,6 +11,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,7 +31,7 @@ public class GardenManager extends AppCompatActivity {        //같이
 
     static {
         plantByGrade.put(0, new String[]{
-                "ardisia_pusilla", "ficus_pusilla", "sansevieria"
+                "ardisia_pusilla", "ficus_pumila", "sansevieria"
         });
         plantByGrade.put(1, new String[]{
                 "geranium_palustre", "kerria_japonica", "trigonotis_peduncularis",
@@ -43,6 +45,7 @@ public class GardenManager extends AppCompatActivity {        //같이
     private MyGameManager gameManager;
     private TextView recoveryTimeTextView;
     private TextView currentEnergyTextView;
+    private ImageView plant;
     private TextView finalAchievementScoreTextView;
     private Handler handler = new Handler();
     private GameDatabaseHelper dbHelper;
@@ -56,11 +59,26 @@ public class GardenManager extends AppCompatActivity {        //같이
         gameManager = new MyGameManager(this);
         recoveryTimeTextView = findViewById(R.id.recoveryTimeTextView);
         currentEnergyTextView = findViewById(R.id.currentEnergyTextView);
+        plant = findViewById(R.id.plant);
         finalAchievementScoreTextView = findViewById(R.id.finalAchievementScoreTextView);
         Button currentPlantButton = findViewById(R.id.current_plant);
 
         var blind = findViewById(R.id.blind);
         blind.setVisibility(View.INVISIBLE);
+        //game bgm
+        SoundManager.playBGM("game");
+        //애니메이션 로딩
+        Animation growing = AnimationUtils.loadAnimation(this, R.anim.growing);
+        growing.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //removePlantImage();
+                setPlantImage();
+            }
+
+            public void onAnimationStart(Animation animation) {}
+            public void onAnimationRepeat(Animation animation) {}
+        });
 
         updateCurrentEnergyDisplay(); // 처음 앱 열 때 기력 표시
         //startUpdatingRecoveryTime(); // 회복 시간 업데이트 시작
@@ -114,6 +132,8 @@ public class GardenManager extends AppCompatActivity {        //같이
             seedAlertBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    //씨앗 심기 효과음
+                    SoundManager.playSFX("garden_seeding");
                     // 씨앗심기
 //                    int result = 0;
 //                    gameManager.updateCurrentPlant(GardenManager.this, "Rose", result);
@@ -141,6 +161,8 @@ public class GardenManager extends AppCompatActivity {        //같이
             seedAlertBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    //씨앗 심기 효과음
+                    SoundManager.playSFX("garden_seeding");
                     // 씨앗심기
 //                    int result = 0;
 //                    gameManager.updateCurrentPlant(GardenManager.this, "Rose", result);
@@ -168,6 +190,8 @@ public class GardenManager extends AppCompatActivity {        //같이
             seedAlertBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    //씨앗 심기 효과음
+                    SoundManager.playSFX("garden_seeding");
                     // 씨앗심기
 //                    int result = 0;
 //                    gameManager.updateCurrentPlant(GardenManager.this, "Rose", result);
@@ -203,6 +227,8 @@ public class GardenManager extends AppCompatActivity {        //같이
                         .setMessage("현재 키우고 있는 식물이 없습니다!")
                         .setPositiveButton("확인", null)
                         .show();
+                //경고 효과음
+                SoundManager.playSFX("alert");
                 Log.e("PlantCheck", "현재 키우고 있는 식물이 없음.");
 
             } else {
@@ -228,8 +254,13 @@ public class GardenManager extends AppCompatActivity {        //같이
         //쓰다듬기 버튼
         ((Button) findViewById(R.id.hand)).setOnClickListener(v -> {
             if (useEnergy(1)) {   //기력 1 사용 및 식물 확인
+                new Thread(() -> {
                 gameManager.growPlant(1);
-                removePlantImage();
+                runOnUiThread(() -> plant.startAnimation(growing));
+                //쓰다듬기 효과음
+                SoundManager.playSFX("garden_hand");
+                }).start();
+
             } else {
 //                Toast.makeText(GardenManager.this,
 //                        "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();
@@ -242,7 +273,10 @@ public class GardenManager extends AppCompatActivity {        //같이
             if (useEnergy(1)) {   //기력 1 사용 및 식물 확인
                 new Thread(() -> {
                 gameManager.growPlant(1);
-                    removePlantImage();
+                    runOnUiThread(() -> plant.startAnimation(growing));
+                    //먼지털기 효과음
+                    SoundManager.playSFX("garden_dust");
+
                 }).start();
             } else {
 //                Toast.makeText(GardenManager.this,
@@ -255,7 +289,10 @@ public class GardenManager extends AppCompatActivity {        //같이
             if (useEnergy(2)) {   //기력 2 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(2);
-                    removePlantImage();
+                    runOnUiThread(() -> plant.startAnimation(growing));
+                    //광합성(빛 on) 효과음
+                    SoundManager.playSFX("garden_light_on");
+
                 }).start();
             } else {
 //                Toast.makeText(GardenManager.this,
@@ -268,7 +305,10 @@ public class GardenManager extends AppCompatActivity {        //같이
             if (useEnergy(5)) {   //기력 5 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(5);
-                    removePlantImage();
+                    runOnUiThread(() -> plant.startAnimation(growing));
+                    //물주기 효과음
+                    SoundManager.playSFX("garden_water");
+
                 }).start();
             } else {
 //                Toast.makeText(GardenManager.this,
@@ -281,7 +321,10 @@ public class GardenManager extends AppCompatActivity {        //같이
             if (useEnergy(10)) {   //기력 10 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(10);
-                    removePlantImage();
+                    runOnUiThread(() -> plant.startAnimation(growing)); //성장 애니메이션
+                    //비료 주기 버튼
+                    SoundManager.playSFX("garden_fertilizer");
+
                 }).start();
             } else {
 //                Toast.makeText(GardenManager.this,
@@ -294,7 +337,10 @@ public class GardenManager extends AppCompatActivity {        //같이
             if (useEnergy(15)) {   //기력 15 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(15);
-                    removePlantImage();
+                    runOnUiThread(() -> plant.startAnimation(growing)); //성장 애니메이션
+                    //노래.. 기타 치는 효과음
+                    SoundManager.playSFX("garden_sing");
+
                 }).start();
             } else {
 
@@ -360,16 +406,6 @@ public class GardenManager extends AppCompatActivity {        //같이
             //plantNameTextView.setText(selectedPlantName.replace("_", " ")); // 보기 좋게 이름 포맷
         }
     }
-    public void removePlantImage() {
-        ImageView plantView = findViewById(R.id.plant);
-        Cursor cursor = dbHelper.getCurrentPlants();
-
-        if (cursor == null) {
-            Log.i("식물", "현재 심어진 식물 없음");
-            plantView.setImageResource(android.R.color.transparent); // 이미지 제거
-        }
-        cursor.close(); // 커서 꼭 닫아주세요
-    }
 
     private void checkGameEndingCondition() {
         int completedCount = dbHelper.getCompletedPlantCount();
@@ -428,6 +464,8 @@ public class GardenManager extends AppCompatActivity {        //같이
 //                            .setMessage("현재 키우고 있는 식물이 없습니다!")
 //                            .setPositiveButton("확인", null)
 //                            .show();
+            //경고 효과음
+            SoundManager.playSFX("alert");
             Log.e("PlantCheck", "현재 키우고 있는 식물이 없음.");
             Toast.makeText(GardenManager.this,
                     "현재 키우고 있는 식물이 없습니다!", Toast.LENGTH_SHORT).show();
@@ -443,6 +481,8 @@ public class GardenManager extends AppCompatActivity {        //같이
                     .setMessage("기력이 부족합니다!")
                     .setPositiveButton("확인", null)
                     .show();
+            //경고 효과음
+            SoundManager.playSFX("alert");
             Log.i("기력", "기력 부족");
             return false;
         }

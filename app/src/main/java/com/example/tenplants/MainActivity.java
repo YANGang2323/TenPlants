@@ -31,6 +31,21 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
         start_scene.setVisibility(View.VISIBLE);
         select_content.setVisibility(View.INVISIBLE);
         blind.setVisibility(View.INVISIBLE);
+
+        // SoundManager 초기화 (필수)
+        SoundManager.init(this);
+
+        // 저장된 sound볼륨 설정값 불러오기 (0 ~ 100)
+        int bgmVolume = SettingManager.getInt(this, "bgm_volume", 100);
+        int sfxVolume = SettingManager.getInt(this, "sfx_volume", 100);
+
+        // SoundManager에 반영 (0.0f ~ 1.0f)
+        SoundManager.setBGMVolume(bgmVolume / 100f);
+        SoundManager.setSFXVolume(sfxVolume / 100f);
+
+        //게임 시작 bgm
+        SoundManager.playBGM("game");
+
         new Thread(() -> {
         // 새로 시작 버튼
         ((Button) findViewById(R.id.game_start)).setOnClickListener(v -> {
@@ -39,6 +54,8 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
             resetAlertBuilder.setTitle("새 게임을 시작할 시 모든 진행사항이 초기화됩니다.");
             resetAlertBuilder.setMessage("새 게임을 시작하시겠습니까?");
             resetAlertBuilder.setPositiveButton("네", (dialog, which) -> {
+                //시작(초기화) 사운드
+                SoundManager.playSFX("story_start");
                 // 데이터베이스 초기화 작업
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 db.beginTransaction();
@@ -99,6 +116,8 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
 
         //content select button
         ((ImageButton)findViewById(R.id.select_garden)).setOnClickListener(v -> {
+            //장소 이동 효과음
+            SoundManager.playSFX("move_place");
             // 가든으로 가기
             Intent gardenIntent = new Intent(this, GardenManager.class);
             startActivity(gardenIntent);
@@ -107,6 +126,8 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
         });
 
         ((ImageButton)findViewById(R.id.select_collection)).setOnClickListener(v -> {
+            //장소 이동 효과음
+            SoundManager.playSFX("move_place");
             // collectionRoom 가기
             Intent collectionRoomIntent = new Intent(this, CollectionRoomManager.class);
             startActivity(collectionRoomIntent);

@@ -21,6 +21,8 @@ public class CollectionRoomManager extends AppCompatActivity {
 
         TableLayout tableLayout = findViewById(R.id.plant_table);
 
+        //game bgm
+        SoundManager.playBGM("game");
 
         // gameManager에서 성장완료된 식물 정보 읽기
         List<String> plantNames = MyGameManager.getInstance(this).getGrownPlants();
@@ -42,7 +44,6 @@ public class CollectionRoomManager extends AppCompatActivity {
         int resId = getResources().getIdentifier(plantName, "drawable", getPackageName());
         return resId != 0 ? resId : R.drawable.lv0_ardisia_pusilla; // 기본 이미지 fallback
     }
-
 
     /**
      * 식물 이름에 해당하는 drawable 이미지로 ImageButton을 생성하여
@@ -80,7 +81,7 @@ public class CollectionRoomManager extends AppCompatActivity {
         plantCount++;
     }
 
-    // 뒤로가기 눌렀을 때 story 말고 mainActivity select_content 창으로 이동
+    // 뒤로가기 눌렀을 때 mainActivity select_content 창으로 이동
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
@@ -92,10 +93,3 @@ public class CollectionRoomManager extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 }
-
-
-//프로그래밍 기획
-//lv0 - 산세베리아, 푸밀라, 산호수
-//lv1 - 황매화, 꽃마리, 쥐손이풀
-//lv2 - 해당화, 금계국, 라벤더
-//lv3 - 팬지, 수선화, 철쭉

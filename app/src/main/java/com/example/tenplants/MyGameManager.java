@@ -52,7 +52,7 @@ public class MyGameManager {
         return new ArrayList<>(grownPlants); // 복사본 반환 (불변성 유지)
     }
     //여기까지
-
+    //생성자 바꾸지 말고 getInstance(this)로 호출하기 , 밑에 grow함수도 그대로 쓰고
 
 
 
@@ -146,7 +146,7 @@ public class MyGameManager {
             switch (name) {
                 case "Rose":
                 case "ardisia_pusilla":
-                case "ficus_pusilla":
+                case "ficus_pumila":
                 case "sansevieria":
                     grade = 0; // BASIC 초급
                     break;
@@ -232,6 +232,8 @@ public class MyGameManager {
             int newStep = dbHelper.calculatePlantStep(newGrowth, grade);
 
             if (newGrowth2 >= maxGrowth2) {
+                //식물 성장 완료
+                SoundManager.playSFX("garden_plant_grow_max");
                 // 성장 완료 처리 (CompletePlants 테이블로 이동)
                 ContentValues completedValues = new ContentValues();
                 completedValues.put("name", name);
@@ -280,6 +282,7 @@ public class MyGameManager {
         new Thread(() -> {
             Cursor cursor = db.rawQuery("SELECT grade FROM CompletedPlants", null);
             final int[] totalScore = {0};  // 점수 누적용
+            final int[] endingID = {1}; // 배열로 감싸기
 
             while (cursor.moveToNext()) {
                 int grade = cursor.getInt(0);
@@ -301,23 +304,27 @@ public class MyGameManager {
             cursor.close();
 
             String ending;
-            if (totalScore[0] >= 270) ending = "전설의 정원사 엔딩";
-            else if (totalScore[0] >= 200) ending = "열정의 정원사 엔딩";
-            else ending = "평범한 정원사 엔딩";
+            String storyID;
+            if (totalScore[0] >= 270) {ending = "전설의 정원사 엔딩"; endingID[0] = 3;}
+            else if (totalScore[0] >= 200) {ending = "열정의 정원사 엔딩"; endingID[0] = 2;}
+            else {ending = "평범한 정원사 엔딩"; endingID[0] = 1;}
+            storyID = Integer.toString(endingID[0]);
 
-            Log.e("엔딩결정", "최종점수: " + totalScore[0] + ", 엔딩: " + ending);
+            Log.e("엔딩결정", "최종점수: " + totalScore[0] + ", 엔딩: " + ending + ", 엔딩번호" + storyID);
 
             // DB에 엔딩 정보 저장
             ContentValues values = new ContentValues();
             values.put("ending", ending);
             db.insert("UnlockedEndings", null, values);
-
+            //엔딩으로 이동 Sound
+            SoundManager.playSFX("garden_game_clear");
             // UI 스레드에서 엔딩 액티비티 전환
             Handler mainHandler = new Handler(Looper.getMainLooper());
             mainHandler.post(() -> {
-                Intent intent = new Intent(context, StoryManager.class);
-                intent.putExtra("totalScore", totalScore[0]);
-                context.startActivity(intent);
+                Intent endStory  = new Intent(context, StoryManager.class);
+                endStory.putExtra("source", "garden");
+                endStory.putExtra("storyType", endingID[0]);
+                context.startActivity(endStory);
             });
         }).start();
     }

@@ -39,6 +39,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9c91b9c-80d1-417a-adab-8aae88c1fea1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/SettingManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/story_ending_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/story_ending_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/story_ending_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/alert.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/raw/move_to_garden_collection.mp3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -46,14 +52,18 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/CollectionRoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/CollectionRoomManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/GameDatabaseHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/GameDatabaseHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/GardenManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/GardenManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/MyGameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/MyGameManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_eglantine.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv1_eglantine.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_narcissus.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv1_narcissus.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_pansy.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_pansy.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lv3_rhododendron_schlippenbachii.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lv2_rhododendron_schlippenbachii.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/SoundManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/SoundManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/StoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/StoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/collectionFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/tenplants/collectionFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/story_ending_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/story_ending_2.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/garden.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/garden.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +130,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
-    "git-widget-placeholder": "piece__one",
+    "git-widget-placeholder": "#2 on piece__one",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/lomi4/AndroidStudioProjects/TenPlants/app/src/main/res/drawable",
     "project.structure.last.edited": "Modules",
@@ -132,10 +142,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\lomi4\AndroidStudioProjects\TenPlants\app\src\main\res\drawable" />
-      <recent name="C:\Users\lomi4\AndroidStudioProjects\TenPlants\app\src\main\res" />
+      <recent name="C:\Users\lomi4\AndroidStudioProjects\TenPlants\app\src\main\res\raw" />
       <recent name="C:\Users\lomi4\AndroidStudioProjects\TenPlants\app\src\main\java\com\example\tenplants" />
+      <recent name="C:\Users\lomi4\AndroidStudioProjects\TenPlants\app\src\main\res" />
       <recent name="C:\Users\lomi4\AndroidStudioProjects\TenPlants\app\src\main\res\values" />
-      <recent name="C:\Users\lomi4\AndroidStudioProjects\TenPlants\app\src\main\res\themes-night" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\lomi4\AndroidStudioProjects\TenPlants\app\src\main\res\drawable" />

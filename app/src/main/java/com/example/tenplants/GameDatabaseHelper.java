@@ -141,7 +141,7 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
         switch (plantName) {
             case "Rose":
             case "ardisia_pusilla":
-            case "ficus_pusilla":
+            case "ficus_pumila":
             case "sansevieria":
                 return 100;  // BASIC 초급
 
@@ -275,60 +275,7 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
 //        db.delete("CurrentPlants", "id = ?", new String[]{String.valueOf(plantId)});
 //    }
 
-    //식물성장데이터와 연산
-    public void growPlant(int addGrowth) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String name = getCurrentPlantName();
-        Cursor cursor = db.rawQuery("SELECT growth, maxGrowth, grade, step FROM CurrentPlants WHERE name = ?",
-                new String[]{name});
 
-        if (cursor.moveToFirst()) {
-            int currentGrowthIndex = cursor.getColumnIndex("growth");
-            int currentGrowth = cursor.getInt(currentGrowthIndex);
-            int maxGrowthIndex = cursor.getColumnIndex("maxGrowth");
-            int maxGrowth = cursor.getInt(maxGrowthIndex);
-            int gradeIndex = cursor.getColumnIndex("grade");
-            int grade = cursor.getInt(gradeIndex);
-            int stepIndex = cursor.getColumnIndex("step");
-            int step = cursor.getInt(stepIndex);
-
-            // 성장도 증가 (초과 성장 시 초과분 이월)
-            int newGrowth = currentGrowth + addGrowth;
-            if (newGrowth > maxGrowth) {
-                newGrowth = maxGrowth;  //최대성장
-            }
-            int maxGrowth2 = maxGrowth; int newGrowth2 = newGrowth;
-            int newStep = calculatePlantStep(newGrowth, grade);
-
-            if (newGrowth2 >= maxGrowth2) {
-                // 성장 완료 처리 (CompletePlants 테이블로 이동)
-                ContentValues completedValues = new ContentValues();
-                completedValues.put("name", name);
-                completedValues.put("completedTime", System.currentTimeMillis());
-                db.insert("CompletedPlants", null, completedValues);
-
-                // 현재 식물 삭제
-                db.delete("CurrentPlants", "name = ?", new String[]{name});
-                Log.i("PlantGrowth", name + "가 최대 성장에 도달하여 완료됨!");
-//                // 성취도 점수 누적
-//                ContentValues updateFinalValues = new ContentValues();
-//                finalAchievementScore += accumulateAchievement(grade);
-//                updateFinalValues.put("finalAchievementScore", finalAchievementScore);
-//
-//                Log.i("finalAchievementScore", "총 획득한 성취도가" + finalAchievementScore + "으로 업데이트됨.");
-                // 성취도 점수 누적
-                accumulateAchievement(grade);
-            } else {
-                // 성장도 업데이트
-                ContentValues updateValues = new ContentValues();
-                updateValues.put("growth", newGrowth2);
-                updateValues.put("step", newStep);
-                db.update("CurrentPlants", updateValues, "name = ?", new String[]{name});
-                Log.i("PlantGrowth", name + "의 성장도가 " + newGrowth2 + "으로 업데이트됨, 단계: " + newStep);
-            }
-        }
-        cursor.close();
-    }
     public int calculatePlantStep(int growth, int grade) {
         int step = 0;
 
