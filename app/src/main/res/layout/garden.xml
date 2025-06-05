@@ -9,11 +9,12 @@
 
     <ImageView
         android:id="@+id/plantTable"
-        android:layout_width="412dp"
-        android:layout_height="855dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/garden_background"
         android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,9 +152,10 @@
         android:translationZ="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/current_plant"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/plantTable"
-        app:layout_constraintVertical_bias="0.647"
+        app:layout_constraintVertical_bias="0.674"
         app:srcCompat="@drawable/lv0_sansevieria" />
 
     <Button

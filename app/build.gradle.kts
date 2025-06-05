@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.tenplants"
+    namespace = "com.example.tenplant"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.tenplants"
-        minSdk = 28
+        applicationId = "com.example.tenplant"
+        minSdk = 24
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
