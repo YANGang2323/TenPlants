@@ -24,11 +24,27 @@ public class CollectionRoomManager extends AppCompatActivity {
         //game bgm
         SoundManager.playBGM("game");
 
-        // gameManager에서 성장완료된 식물 정보 읽기
-        List<String> plantNames = MyGameManager.getInstance().getGrownPlants();
-        for (String plantName : plantNames) {
+        // ✅ GameDatabaseHelper 인스턴스 생성
+        GameDatabaseHelper dbHelper = new GameDatabaseHelper(this);
+
+        // ✅ 완료된 식물 이름 목록 가져오기
+        List<String> completedPlantNames = dbHelper.getCompletedPlantNames();
+
+        // ✅ 버튼이 실제로 추가된 식물 이름 리스트
+        List<String> addedButtons = new ArrayList<>();
+
+        // ✅ 각 식물 이름에 대해 버튼 추가
+        for (String plantName : completedPlantNames) {
             addPlantButton(plantName);
+            addedButtons.add(plantName); // 버튼 추가된 식물 이름 저장
         }
+
+        // ✅ Toast 메시지 구성
+        String completedList = completedPlantNames.isEmpty() ? "없습니다" : String.join(", ", completedPlantNames);
+        String addedList = addedButtons.isEmpty() ? "없습니다" : String.join(", ", addedButtons);
+        String message = "완료된 식물 이름 목록은 " + completedList + "입니다. 버튼 추가 완료된 식물은 " + addedList + "입니다.";
+
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
 
