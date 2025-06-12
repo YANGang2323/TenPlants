@@ -87,7 +87,6 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="112dp"
             android:background="@drawable/garden_seed_0"
-            android:text="seed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,6 +126,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="32dp"
             android:text="charge"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -136,6 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="completePlant"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/energyreset" />
 
@@ -163,22 +164,19 @@
                 android:id="@+id/hand"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@drawable/garden_hand"
-                android:text="hand" />
+                android:background="@drawable/garden_hand" />
 
             <Button
                 android:id="@+id/dust"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@drawable/garden_dust_remover"
-                android:text="dust" />
+                android:background="@drawable/garden_dust_remover" />
 
             <Button
                 android:id="@+id/light"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@drawable/garden_sun"
-                android:text="light" />
+                android:background="@drawable/garden_sun" />
 
         </LinearLayout>
 
@@ -193,22 +191,19 @@
                 android:id="@+id/water"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@drawable/garden_water"
-                android:text="water" />
+                android:background="@drawable/garden_water" />
 
             <Button
                 android:id="@+id/fertilizer"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@drawable/garden_fertilizer"
-                android:text="fertilizer" />
+                android:background="@drawable/garden_fertilizer" />
 
             <Button
                 android:id="@+id/sing"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@drawable/garden_sing"
-                android:text="sing" />
+                android:background="@drawable/garden_sing" />
 
         </LinearLayout>
 
@@ -247,7 +242,8 @@
             <ScrollView
                 android:layout_width="310dp"
                 android:layout_height="278dp"
-                android:layout_margin="39dp">
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="50dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -261,21 +257,21 @@
                         android:background="@drawable/yellow_bar"
                         android:elevation="10dp"
                         android:foregroundGravity="center"
-                        android:text="seed1" />
+                        android:text="randomseed1" />
 
                     <Button
                         android:id="@+id/twoseed"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:background="@drawable/yellow_bar"
-                        android:text="seed2" />
+                        android:text="randomseed2" />
 
                     <Button
                         android:id="@+id/thrseed"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:background="@drawable/yellow_bar"
-                        android:text="seed3" />
+                        android:text="randomseed3" />
 
                 </LinearLayout>
             </ScrollView>

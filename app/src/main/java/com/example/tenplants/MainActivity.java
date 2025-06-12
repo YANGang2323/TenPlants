@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,13 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
 
         // SoundManager 초기화 (필수)
         SoundManager.init(this);
+
+        //설정 음량버튼
+        SeekBar BGMbar = findViewById(R.id.BGMbar);
+        SeekBar SFbar = findViewById(R.id.SFbar);
+
+        // 초기화 (볼륨값 설정 + 리스너 등록)
+        SettingManager.initVolumeSeekBars(this, BGMbar, SFbar);
 
         // 저장된 sound볼륨 설정값 불러오기 (0 ~ 100)
         int bgmVolume = SettingManager.getInt(this, "bgm_volume", 100);

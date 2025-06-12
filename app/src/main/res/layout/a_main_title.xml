@@ -140,24 +140,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="option"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:id="@+id/option_bgm"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="4dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:layout_weight="1"
-                    android:text="TextView"
+                    android:text="BGM"
+                    android:textAlignment="center"
                     android:textSize="20sp" />
 
                 <SeekBar
-                    android:id="@+id/seekBar"
+                    android:id="@+id/BGMbar"
                     android:layout_width="wrap_content"
                     android:layout_height="44dp"
                     android:layout_weight="1" />
@@ -172,13 +174,14 @@
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="5dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:layout_weight="1"
-                    android:text="TextView"
+                    android:text="SF"
+                    android:textAlignment="center"
                     android:textSize="20sp" />
 
                 <SeekBar
-                    android:id="@+id/seekBar2"
+                    android:id="@+id/SFbar"
                     android:layout_width="wrap_content"
                     android:layout_height="44dp"
                     android:layout_weight="1" />
@@ -189,7 +192,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="Developer: YSR, RSM"
+                android:textAlignment="center" />
 
         </LinearLayout>
 
