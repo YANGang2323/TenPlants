@@ -21,16 +21,18 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
     @Override
     public void onCreate(SQLiteDatabase db) {//테이블을 생성하는 SQL문장
         db.execSQL("CREATE TABLE PlayerData (id INTEGER PRIMARY KEY, energy INTEGER, lastUpdateTime INTEGER, finalAchievementScore INTEGER)");
+        db.execSQL("CREATE TABLE PlantingTime (id INTEGER PRIMARY KEY, plantingTime INTEGER)");
         db.execSQL("CREATE TABLE CurrentPlants (id INTEGER PRIMARY KEY, name TEXT, grade INTEGER, step INTEGER DEFAULT 0, growth INTEGER, maxGrowth INTEGER)");
         db.execSQL("CREATE TABLE CompletedPlants (id INTEGER PRIMARY KEY, name TEXT, grade INTEGER, completedTime INTEGER)");
-        db.execSQL("CREATE TABLE UnlockedPlants (id INTEGER PRIMARY KEY, name TEXT)");
-        db.execSQL("CREATE TABLE UnlockedEndings (id INTEGER PRIMARY KEY, ending TEXT)");
-        db.execSQL("CREATE TABLE lockedPlants (id INTEGER PRIMARY KEY, name TEXT)");
-        db.execSQL("CREATE TABLE lockedEndings (id INTEGER PRIMARY KEY, ending TEXT)");
+        db.execSQL("CREATE TABLE UnlockedPlants (id INTEGER PRIMARY KEY, name TEXT UNIQUE)");
+        db.execSQL("CREATE TABLE UnlockedEndings (id INTEGER PRIMARY KEY, ending TEXT UNIQUE)");
+        db.execSQL("CREATE TABLE lockedPlants (id INTEGER PRIMARY KEY, name TEXT UNIQUE)");
+        db.execSQL("CREATE TABLE lockedEndings (id INTEGER PRIMARY KEY, ending TEXT UNIQUE)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {//테이블을 업그레이드하는 SQL문장
         db.execSQL("DROP TABLE IF EXISTS PlayerData");
+        db.execSQL("DROP TABLE IF EXISTS PlantingTime");
         db.execSQL("DROP TABLE IF EXISTS CurrentPlants");
         db.execSQL("DROP TABLE IF EXISTS CompletedPlants");
         db.execSQL("DROP TABLE IF EXISTS UnlockedPlants");
@@ -137,6 +139,38 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
         cursor.close();
         return count; // 완료된 식물 개수 반환
     }
+    public List<String> getUnlockedPlantNames() {
+        List<String> unlockedPlants = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT name FROM UnlockedPlants", null);
+        String unlockedPlantNames = null;
+
+        if (cursor.moveToFirst()) {
+            do {
+                int nameIndex = cursor.getColumnIndex("name");
+                unlockedPlantNames = cursor.getString(nameIndex);
+                unlockedPlants.add(unlockedPlantNames);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return unlockedPlants;
+    }
+    public List<String> getUnlockedEnddingNames() {
+        List<String> unlockedEnddings = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT ending FROM UnlockedEndings", null);
+        String unlockedEnddingNames = null;
+
+        if (cursor.moveToFirst()) {
+            do {
+                int nameIndex = cursor.getColumnIndex("ending");
+                unlockedEnddingNames = cursor.getString(nameIndex);
+                unlockedEnddings.add(unlockedEnddingNames);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return unlockedEnddings;
+    }
     public int getMaxGrowth(String plantName) {
         switch (plantName) {
             case "Rose":
@@ -157,6 +191,33 @@ public class GameDatabaseHelper  extends SQLiteOpenHelper {         //양새롬
             case "pansy":
             case "rhododendron_schlippenbachii":
                 return 300;  // ADVANCED 고급
+
+            default:
+                Log.i("씨앗", "해당없음");
+                return 0;  // 알 수 없는 식물
+        }
+    }
+
+    public int getGrade(String plantName) {
+        switch (plantName) {
+            case "Rose":
+            case "ardisia_pusilla":
+            case "ficus_pumila":
+            case "sansevieria":
+                return 0;  // BASIC 초급
+
+            case "geranium_palustre":
+            case "kerria_japonica":
+            case "trigonotis_peduncularis":
+            case "eglantine":
+            case "narcissus":
+                return 1;  // INTERMEDIATE 중급
+
+            case "coreopsis_basalis":
+            case "lavandula_angustifolia":
+            case "pansy":
+            case "rhododendron_schlippenbachii":
+                return 2;  // ADVANCED 고급
 
             default:
                 Log.i("씨앗", "해당없음");

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +47,6 @@ public class GardenManager extends AppCompatActivity {        //같이
     private TextView recoveryTimeTextView;
     private TextView currentEnergyTextView;
     private ImageView plant;
-    private TextView finalAchievementScoreTextView;
     private Handler handler = new Handler();
     private GameDatabaseHelper dbHelper;
 
@@ -60,8 +60,8 @@ public class GardenManager extends AppCompatActivity {        //같이
         recoveryTimeTextView = findViewById(R.id.recoveryTimeTextView);
         currentEnergyTextView = findViewById(R.id.currentEnergyTextView);
         plant = findViewById(R.id.plant);
-        finalAchievementScoreTextView = findViewById(R.id.finalAchievementScoreTextView);
-        Button currentPlantButton = findViewById(R.id.current_plant);
+        //finalAchievementScoreTextView = findViewById(R.id.finalAchievementScoreTextView);
+        ImageView currentPlantButton = findViewById(R.id.current_plant);
 
         var blind = findViewById(R.id.blind);
         blind.setVisibility(View.INVISIBLE);
@@ -82,7 +82,7 @@ public class GardenManager extends AppCompatActivity {        //같이
 
         updateCurrentEnergyDisplay(); // 처음 앱 열 때 기력 표시
         //startUpdatingRecoveryTime(); // 회복 시간 업데이트 시작
-        updateFinalAchievementScoreDisplay(); //플레이어의 성취도 업데이트
+        //updateFinalAchievementScoreDisplay(); //플레이어의 성취도 업데이트
         setPlantImage();
 
 
@@ -93,7 +93,7 @@ public class GardenManager extends AppCompatActivity {        //같이
                     Toast.makeText(GardenManager.this, plantName + " 성장이 완료되었습니다!", Toast.LENGTH_SHORT).show();
 
                     // 성취도 점수 갱신
-                    finalAchievementScoreTextView.setText(String.valueOf(finalAchievementScore));
+                    //finalAchievementScoreTextView.setText(String.valueOf(finalAchievementScore));
                     new Thread(() -> {
                     // 완료된 식물 표시 등 추가 처리 가능
                     displayCompletedPlantsAndScore();
@@ -109,13 +109,13 @@ public class GardenManager extends AppCompatActivity {        //같이
             dbHelper.setPlayerEnergyToMax(1);
         });
         // 씨앗 버튼
-        ((Button) findViewById(R.id.seed)).setOnClickListener(v -> {
+        ((ImageView) findViewById(R.id.seed)).setOnClickListener(v -> {
             // seed선택창 표시, blind 표시
             blind.setVisibility(View.VISIBLE);
             Log.i("씨앗", "심기창");
         });
         // 씨앗심기 버튼
-        ((Button) findViewById(R.id.close_seed_selection)).setOnClickListener(v -> {
+        ((ImageButton) findViewById(R.id.close_seed_selection)).setOnClickListener(v -> {
             // seed선택창 닫기, blind 내림
             blind.setVisibility(View.INVISIBLE);
             Log.i("씨앗", "심기창닫기");
@@ -213,7 +213,7 @@ public class GardenManager extends AppCompatActivity {        //같이
         });
 
         //현재식물의 성장도확인 버튼
-        ((Button) findViewById(R.id.current_plant)).setOnClickListener(v -> {
+        ((ImageView) findViewById(R.id.current_plant)).setOnClickListener(v -> {
             String plantName = dbHelper.getCurrentPlantName(); // 현재 식물 이름 가져오기
             int growth = gameManager.getCurrentPlantGrowth(); // 성장도 가져오기
             int step = gameManager.getCurrentPlantStep(); // 현재 성장 단계 가져오기
@@ -252,7 +252,7 @@ public class GardenManager extends AppCompatActivity {        //같이
         });
 
         //쓰다듬기 버튼
-        ((Button) findViewById(R.id.hand)).setOnClickListener(v -> {
+        ((ImageButton) findViewById(R.id.hand)).setOnClickListener(v -> {
             if (useEnergy(1)) {   //기력 1 사용 및 식물 확인
                 new Thread(() -> {
                 gameManager.growPlant(1);
@@ -269,7 +269,7 @@ public class GardenManager extends AppCompatActivity {        //같이
             //애니메이션 끝나면 엔딩체크
         });
         // 먼지 털기 버튼
-        ((Button) findViewById(R.id.dust)).setOnClickListener(v -> {
+        ((ImageButton) findViewById(R.id.dust)).setOnClickListener(v -> {
             if (useEnergy(1)) {   //기력 1 사용 및 식물 확인
                 new Thread(() -> {
                 gameManager.growPlant(1);
@@ -285,7 +285,7 @@ public class GardenManager extends AppCompatActivity {        //같이
 
         });
         // 광합성 버튼
-        ((Button) findViewById(R.id.light)).setOnClickListener(v -> {
+        ((ImageButton) findViewById(R.id.light)).setOnClickListener(v -> {
             if (useEnergy(2)) {   //기력 2 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(2);
@@ -301,7 +301,7 @@ public class GardenManager extends AppCompatActivity {        //같이
 
         });
         // 물주기 버튼
-        ((Button) findViewById(R.id.water)).setOnClickListener(v -> {
+        ((ImageButton) findViewById(R.id.water)).setOnClickListener(v -> {
             if (useEnergy(5)) {   //기력 5 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(5);
@@ -317,7 +317,7 @@ public class GardenManager extends AppCompatActivity {        //같이
 
         });
         // 비료 주기 버튼
-        ((Button) findViewById(R.id.fertilizer)).setOnClickListener(v -> {
+        ((ImageButton) findViewById(R.id.fertilizer)).setOnClickListener(v -> {
             if (useEnergy(10)) {   //기력 10 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(10);
@@ -333,7 +333,7 @@ public class GardenManager extends AppCompatActivity {        //같이
 
         });
         // 노래 불러 주기 버튼
-        ((Button) findViewById(R.id.sing)).setOnClickListener(v -> {
+        ((ImageButton) findViewById(R.id.sing)).setOnClickListener(v -> {
             if (useEnergy(15)) {   //기력 15 사용 및 식물 확인
                 new Thread(() -> {
                     gameManager.growPlant(15);
@@ -384,7 +384,7 @@ public class GardenManager extends AppCompatActivity {        //같이
             plantView.setImageResource(android.R.color.transparent); // 이미지 제거
         }
 
-        cursor.close(); // 커서 꼭 닫아주세요
+        cursor.close(); // 커서 꼭 닫기
     }
     public void planting(int targetGrade){
         ImageView plantView = findViewById(R.id.plant);
@@ -525,15 +525,6 @@ public class GardenManager extends AppCompatActivity {        //같이
         }
     }
 
-    private void updateFinalAchievementScoreDisplay() {
-        int score = gameManager.getAchieveScore();
-        //if (score != 0) {
-        runOnUiThread(() -> {
-        finalAchievementScoreTextView.setText(String.valueOf(score));
-        });
-        //}
-    }
-
     private Runnable updateTask = new Runnable() {
         @Override
         public void run() {
@@ -546,6 +537,7 @@ public class GardenManager extends AppCompatActivity {        //같이
     protected void onResume() {
         super.onResume();
         startUpdatingRecoveryTime();
+        MyGameManager.getInstance(this).updatePlantGrowthByPlantingTime();
     }
 
     @Override
@@ -556,6 +548,7 @@ public class GardenManager extends AppCompatActivity {        //같이
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         Log.d("PlantActivity", "onDestroy() 호출됨 - 액티비티가 종료됨");
     }
 

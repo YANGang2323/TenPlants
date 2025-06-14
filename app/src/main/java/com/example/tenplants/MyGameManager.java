@@ -109,11 +109,27 @@ public class MyGameManager {
     public void saveEnergy(int energy) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int currentScore = getAchieveScore();//성취도 유지
+        // 기존 energy, lastUpdateTime 가져오기
+        Cursor cursor = db.rawQuery("SELECT energy, lastUpdateTime FROM PlayerData WHERE id = 1", null);
+        int prevEnergy = MAX_ENERGY; // 기본값
+        long prevLastUpdateTime = System.currentTimeMillis();
+        if (cursor.moveToFirst()) {
+            prevEnergy = cursor.getInt(0);
+            prevLastUpdateTime = cursor.getLong(1);
+        }cursor.close();
+
         ContentValues values = new ContentValues();
         values.put("id", 1);
         values.put("energy", energy);
-        values.put("lastUpdateTime", System.currentTimeMillis());
         values.put("finalAchievementScore", currentScore);
+
+        // 기력이 최대치에서 깎일 때만 lastUpdateTime을 현재 시각으로 갱신
+        if (prevEnergy == MAX_ENERGY && energy < MAX_ENERGY) {
+            values.put("lastUpdateTime", System.currentTimeMillis());
+        } else {
+            values.put("lastUpdateTime", prevLastUpdateTime); // 기존 값 유지
+        }
+
         db.insertWithOnConflict("PlayerData", null, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
@@ -140,6 +156,14 @@ public class MyGameManager {
     //씨앗심고 현재식물 업데이트
     public int updateCurrentPlant(Context context, String name, int result){
         Cursor cursor = dbHelper.getCurrentPlants();
+        Cursor cursor2 = db.rawQuery("SELECT plantingTime FROM PlantingTime", null);
+        long plantingTime = System.currentTimeMillis();
+        int plantId = 1;
+        ContentValues values = new ContentValues();
+        values.put("plantingTime", plantingTime);
+        db.insert("PlantingTime", null, values);
+        db.update("PlantingTime", values, "id = ?", new String[]{String.valueOf(plantId)});
+        cursor2.close();
 
         if(cursor.getCount() <= 0) {
             int grade;
@@ -199,6 +223,7 @@ public class MyGameManager {
         void onGrowthComplete(String plantName, int finalAchievementScore);
     }
 
+
     private OnPlantGrowthListener growthListener;
 
     public void setOnPlantGrowthListener(OnPlantGrowthListener listener) {
@@ -234,12 +259,23 @@ public class MyGameManager {
             if (newGrowth2 >= maxGrowth2) {
                 //식물 성장 완료
                 SoundManager.playSFX("garden_plant_grow_max");
-                // 성장 완료 처리 (CompletePlants 테이블로 이동)
+                // 성장 완료 처리 (CompletePlants 테이블로 이동, UnlockedPlants 추가)
                 ContentValues completedValues = new ContentValues();
                 completedValues.put("name", name);
                 completedValues.put("completedTime", System.currentTimeMillis());
                 completedValues.put("grade", grade);
                 db.insert("CompletedPlants", null, completedValues);
+                //언락식물에 추가 중복방지
+                Cursor cursor2 = db.rawQuery("SELECT name FROM UnlockedPlants WHERE name = ?", new String[]{name});
+                boolean exists = cursor2.moveToFirst();
+                cursor2.close();
+
+                if (!exists) {
+                    ContentValues unlockedValues = new ContentValues();
+                    unlockedValues.put("name", name);
+                    db.insert("UnlockedPlants", null, unlockedValues);
+                }
+                
 
                 // 현재 식물 삭제
                 db.delete("CurrentPlants", "name = ?", new String[]{name});
@@ -276,6 +312,56 @@ public class MyGameManager {
         return growth; // 현재 식물의 성장도 반환
     }
 
+    //자동성장
+    private static final long GROWTH_INTERVAL_MS = 60 * 60 * 1000; // 1시간
+    private static final int GROWTH_PER_INTERVAL = 3;
+    public void updatePlantGrowthByPlantingTime() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        long now = System.currentTimeMillis();
+
+        Cursor cursor = db.rawQuery("SELECT id, growth, maxGrowth, grade FROM CurrentPlants", null);
+        Cursor cursor2 = db.rawQuery("SELECT plantingTime FROM PlantingTime", null);
+
+        while (cursor.moveToNext() && cursor2.moveToNext()) {
+            //cursor1
+            int idIndex = cursor.getColumnIndex("id");
+            int growthIndex = cursor.getColumnIndex("growth");
+            int maxGrowthIndex = cursor.getColumnIndex("maxGrowth");
+            int gradeIndex = cursor.getColumnIndex("grade");
+
+            int id = cursor.getInt(idIndex);
+            int growth = cursor.getInt(growthIndex);
+            int maxGrowth = cursor.getInt(maxGrowthIndex);
+            int grade = cursor.getInt(gradeIndex);
+            //cursor2
+            int plantingTimeIndex = cursor2.getColumnIndex("plantingTime");
+            long plantingTime = cursor2.getLong(plantingTimeIndex);
+
+            long elapsed = now - plantingTime;
+            int intervalsPassed = (int)(elapsed / GROWTH_INTERVAL_MS);
+            int totalGrowthToAdd = intervalsPassed * GROWTH_PER_INTERVAL;
+            Log.d("GrowthDebug", "now: " + now + ", plantingTime: " + plantingTime + ", elapsed: " + elapsed);
+            // 최대성장도 - 1까지만 성장
+            int maxAllowedGrowth = maxGrowth - 1;
+            if (growth < maxAllowedGrowth) {
+                int newGrowth = growth + totalGrowthToAdd;
+                if (newGrowth > maxAllowedGrowth) {
+                    newGrowth = maxAllowedGrowth;
+                }
+
+                if (newGrowth != growth) {
+                    ContentValues values = new ContentValues();
+                    values.put("growth", newGrowth);
+                    int newStep = dbHelper.calculatePlantStep(newGrowth, grade);
+                    values.put("step", newStep);
+
+                    db.update("CurrentPlants", values, "id = ?", new String[]{String.valueOf(id)});
+                }
+            }
+        }
+        cursor.close();cursor2.close();
+    }
 
     //엔딩 확인 및 처리
     public void checkAndShowEndingAsync(Context context, SQLiteDatabase db) {
@@ -313,9 +399,18 @@ public class MyGameManager {
             Log.e("엔딩결정", "최종점수: " + totalScore[0] + ", 엔딩: " + ending + ", 엔딩번호" + storyID);
 
             // DB에 엔딩 정보 저장
-            ContentValues values = new ContentValues();
-            values.put("ending", ending);
-            db.insert("UnlockedEndings", null, values);
+            //언락식물에 추가 중복방지
+            Cursor cursor2 = db.rawQuery("SELECT ending FROM UnlockedEndings WHERE ending = ?", new String[]{ending});
+            boolean exists = cursor2.moveToFirst();
+            cursor2.close();
+
+            if (!exists) {
+                ContentValues values = new ContentValues();
+                values.put("ending", ending);
+                db.insert("UnlockedEndings", null, values);
+            }
+
+
             //엔딩으로 이동 Sound
             SoundManager.playSFX("garden_game_clear");
             // UI 스레드에서 엔딩 액티비티 전환

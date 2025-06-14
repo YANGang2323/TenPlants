@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -52,12 +54,23 @@ public class collectionFragment extends DialogFragment {
         profileText.setText(profileInfo);
 
         imageButton.setOnClickListener(v -> {
-            // 카드 반전 애니메이션
-            flipCard(imageButton, profileText);
+            //애니메이션
+            toggleProfile(profileText);
+            //flipCard(imageButton, profileText);
+        });
+        profileText.setOnClickListener(v -> {
+            toggleProfile(profileText);
+            //flipCard(imageButton, profileText);
+        }); // 텍스트도 클릭 시 다시 거꾸로
+
+        //돌아가기 버튼
+        ((ImageButton) view.findViewById(R.id.backButton)).setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager().popBackStack();
         });
 
         return view;
     }
+
 
     // 코드에 따라 이미지 선택
     private int getImageResourceByCode(String code) {
@@ -71,16 +84,54 @@ public class collectionFragment extends DialogFragment {
         return profile != null ? profile : "알 수 없는 식물입니다.";
     }
 
+
+
+    private boolean isProfileVisible = false; // 상태 추적
+
+    private void toggleProfile(TextView profileText) {
+        if (!isProfileVisible) {
+            // 뽀용하게 등장
+            profileText.setVisibility(View.VISIBLE);
+            profileText.setScaleX(0f);
+            profileText.setScaleY(0f);
+            profileText.setAlpha(0f);
+
+            profileText.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .alpha(1f)
+                    .setDuration(300)
+                    .setInterpolator(new OvershootInterpolator())
+                    .start();
+
+            isProfileVisible = true;
+
+        } else {
+            // 뽀용하게 사라짐
+            profileText.animate()
+                    .scaleX(0f)
+                    .scaleY(0f)
+                    .alpha(0f)
+                    .setDuration(300)
+                    .setInterpolator(new AnticipateInterpolator())
+                    .withEndAction(() -> profileText.setVisibility(View.GONE))
+                    .start();
+
+            isProfileVisible = false;
+        }
+    }
     //식물 클릭하면 카드 뒤집히는 것처럼 효과 나오고 상세 설명 나옴
+    private boolean isFlipped = false; // flip 상태 저장
     private void flipCard(View frontView, View backView) {
         float scale = frontView.getContext().getResources().getDisplayMetrics().density;
         frontView.setCameraDistance(8000 * scale);
         backView.setCameraDistance(8000 * scale);
-
+        if (!isFlipped) {
+            // 이미지 → 텍스트
         AnimatorSet flipOut = new AnimatorSet();
         AnimatorSet flipIn = new AnimatorSet();
 
-        ObjectAnimator frontFlipOut = ObjectAnimator.ofFloat(frontView, "rotationY", 0f, 90f);
+        ObjectAnimator frontFlipOut = ObjectAnimator.ofFloat(frontView, "rotationY", 90f, 0f);
         frontFlipOut.setDuration(200);
         frontFlipOut.setInterpolator(new AccelerateInterpolator());
 
@@ -90,9 +141,9 @@ public class collectionFragment extends DialogFragment {
 
         frontFlipOut.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationEnd(Animator animation) {
-                frontView.setVisibility(View.GONE);
-                backView.setVisibility(View.VISIBLE);
+                public void onAnimationEnd(Animator animation) {
+                    frontView.setVisibility(View.VISIBLE);
+                    backView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -103,9 +154,44 @@ public class collectionFragment extends DialogFragment {
         flipOut.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                flipIn.start();
+                    flipIn.start();
             }
         });
+        isFlipped = true;
+    }else {
+            // 텍스트 → 이미지
+            AnimatorSet flipOut = new AnimatorSet();
+            AnimatorSet flipIn = new AnimatorSet();
+
+//            ObjectAnimator frontFlipIn = ObjectAnimator.ofFloat(frontView, "rotationY", -90f, 0f);
+//            frontFlipIn.setDuration(200);
+//            frontFlipIn.setInterpolator(new DecelerateInterpolator());
+
+            ObjectAnimator backFlipOut = ObjectAnimator.ofFloat(backView, "rotationY", 90f, 0f);
+            backFlipOut.setDuration(200);
+            backFlipOut.setInterpolator(new AccelerateInterpolator());
+
+            backFlipOut.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    frontView.setVisibility(View.VISIBLE);
+                    backView.setVisibility(View.GONE);
+                }
+            });
+
+            flipOut.play(backFlipOut);
+            //flipIn.play(frontFlipIn);
+
+            flipOut.start();
+            flipOut.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    flipIn.start();
+                }
+            });
+
+            isFlipped = false;
+        }
     }
 
     //식물이름에 맞는 이미지 넣기
@@ -121,7 +207,10 @@ public class collectionFragment extends DialogFragment {
             Map.entry("lv2_lavandula_angustifolia", R.drawable.lv2_lavandula_angustifolia),
             Map.entry("lv1_narcissus", R.drawable.lv1_narcissus),
             Map.entry("lv2_pansy", R.drawable.lv2_pansy),
-            Map.entry("lv2_rhododendron_schlippenbachii", R.drawable.lv2_rhododendron_schlippenbachii)
+            Map.entry("lv2_rhododendron_schlippenbachii", R.drawable.lv2_rhododendron_schlippenbachii),
+            Map.entry("story_ending_1", R.drawable.story_ending_1),
+            Map.entry("story_ending_2", R.drawable.story_ending_2),
+            Map.entry("story_ending_3", R.drawable.story_ending_3)
     );
 
     //식물이름에 맞는 설명 띄우기
@@ -149,6 +238,16 @@ public class collectionFragment extends DialogFragment {
             Map.entry("lv2_pansy","이름: 팬지\n" +
                     "특징: 다양한 색상의 꽃이 매력적. 겨울부터 봄까지 개화. 화단에 자주 쓰임."),
             Map.entry("lv2_rhododendron_schlippenbachii","이름: 철쭉 (정확히는 흰철쭉 또는 연철쭉)\n" +
-                    "특징: 봄에 화려한 꽃을 피우며, 한국 산지에서 흔하게 볼 수 있음.")
+                    "특징: 봄에 화려한 꽃을 피우며, 한국 산지에서 흔하게 볼 수 있음."),
+            Map.entry("story_ending_1","평범한 정원사 엔딩: 축하합니다! 10개의 식물을 완전히 기르는 데 성공했습니다!\n" +
+                    "평범해 보이는 식물들이지만 이렇게 기르는데도 많은 시간과 정성이 들었습니다.\n" +
+                    "당신은 평범한 정원사지만 당신의 노력은 모두가 알아줄 겁니다!"),
+            Map.entry("story_ending_2","열정의 정원사 엔딩: 축하합니다! 10개의 식물을 완전히 기르는 데 성공했습니다!\n" +
+                    "잘 키운 좋은 품질의 식물들이 햇살에 건강하게 빛납니다.\n" +
+                    "당신은 열정의 정원사, 당신의 열정이 이 식물들을 키웠습니다."),
+            Map.entry("story_ending_3","전설의 정원사 엔딩: 축하합니다! 10개의 식물을 완전히 기르는 데 성공했습니다!\n" +
+                    "당신의 손에서 가꾸어진 식물들은 흠잡을 곳 없이 완벽합니다..!\n" +
+                    "당신은 전설의 정원사입니다. 당신이 키우지 못할 식물은 존재하지 않습니다.\n" +
+                    "대부호의 정원사가 되어 행복하게 돈을 벌 수 있을지도?")
     );
 }

@@ -3,38 +3,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/plant_detail_root"
     android:layout_width="match_parent"
-    android:layout_height="700dp"
-    android:padding="24dp"
+    android:layout_height="match_parent"
     android:verticalScrollbarPosition="defaultPosition"
     app:guidelineUseRtl="true">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="364dp"
-        android:layout_height="658dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CC000000"
         android:scaleY="2"
         app:srcCompat="@drawable/yellow_box" />
 
     <ImageButton
         android:id="@+id/plant_image_button"
-        android:layout_width="184dp"
-        android:layout_height="306dp"
+        android:layout_width="260dp"
+        android:layout_height="425dp"
         android:layout_gravity="center"
         android:background="@android:color/transparent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/lv1_trigonotis_peduncularis"
-        android:contentDescription="@string/material_motion_easing_decelerated"/>
+        android:contentDescription="@string/material_motion_easing_decelerated"
+        android:scaleType="fitXY"
+        android:src="@drawable/lv1_trigonotis_peduncularis" />
 
     <TextView
         android:id="@+id/plant_profile_text"
-        android:layout_width="413dp"
-        android:layout_height="371dp"
+        android:layout_width="359dp"
+        android:layout_height="214dp"
         android:layout_gravity="bottom"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="190dp"
+        android:alpha="0"
         android:background="#AAFFFFFF"
         android:padding="12dp"
+        android:scaleX="0"
+        android:scaleY="0"
         android:text="식물 정보"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="60dp"
+            android:layout_height="55dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.97"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.060000002"
+            app:srcCompat="@drawable/btn_back"
+            android:contentDescription="돌아가기 버튼"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

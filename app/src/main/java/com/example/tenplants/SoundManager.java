@@ -138,6 +138,18 @@ public class SoundManager {
         SettingManager.saveInt(context, SettingManager.KEY_SFX_VOLUME, (int)(volume * 100));
     }
 
+    public static void pauseBGM() {
+        if (currentBGM != null && currentBGM.isPlaying()) {
+            currentBGM.pause();
+        }
+    }
+
+    public static void resumeBGM() {
+        if (currentBGM != null && !currentBGM.isPlaying()) {
+            currentBGM.start();
+        }
+    }
+
     public static void release() {
         stopAllBGM();
 

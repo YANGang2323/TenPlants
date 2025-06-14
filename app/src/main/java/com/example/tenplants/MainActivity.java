@@ -180,6 +180,21 @@ public class MainActivity extends AppCompatActivity {      //둘이 같이, 함�
 
 
     //앱 생애주기 onresume
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyGameManager.getInstance(this).updatePlantGrowthByPlantingTime();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SoundManager.release();
+        Log.d("PlantActivity", "onDestroy() 호출됨 - 액티비티가 종료됨");
+    }
 
 }

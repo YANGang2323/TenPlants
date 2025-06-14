@@ -32,7 +32,8 @@ android {
 }
 
 dependencies {
-
+    implementation ("androidx.lifecycle:lifecycle-process:2.6.1")
+    implementation ("androidx.lifecycle:lifecycle-runtime:2.6.1")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

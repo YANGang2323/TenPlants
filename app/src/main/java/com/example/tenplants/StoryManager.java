@@ -1,6 +1,7 @@
 package com.example.tenplants;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class StoryManager extends AppCompatActivity {     //류수민
+public class StoryManager extends AppCompatActivity {
+    private GameDatabaseHelper dbHelper;
     private MyGameManager gameManager;
+    public static final int MAX_ENERGY = 120;
     //프로그래밍 기획
     //[구성] 레이아웃 구성
     //[구성] 스토리 파일 - 게임 초기, 게임 엔딩
@@ -30,6 +33,7 @@ public class StoryManager extends AppCompatActivity {     //류수민
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.story);
+        dbHelper = new GameDatabaseHelper(this);
         //프로그래밍 기획
         //[구성] 레이아웃 구성
         //[구성] 스토리 파일 - 게임 초기, 게임 엔딩
@@ -82,6 +86,31 @@ public class StoryManager extends AppCompatActivity {     //류수민
 
         //게임 스토리 bgm
         SoundManager.playBGM("story");
+
+        //해당회차 완료된식물, 기력 등
+        // 데이터베이스 초기화 작업
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            // PlayerData 테이블 초기화
+            db.delete("PlayerData", null, null);
+            dbHelper.insertPlayerData(MAX_ENERGY, System.currentTimeMillis(),0);
+            Log.d("GameReset", "PlayerData 초기화 완료");
+
+            // CompletedPlants 테이블 초기화
+            db.execSQL("CREATE TABLE IF NOT EXISTS CompletedPlants (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, growth INTEGER)");
+            db.delete("CompletedPlants", null, null); // 모든 데이터 삭제
+            Log.d("GameReset", "CompletedPlants 초기화 완료");
+
+            db.setTransactionSuccessful();  // 트랜잭션 커밋
+        } catch (Exception e) {
+            e.printStackTrace();  // 오류 발생 시 로그 출력
+            Log.e("GameReset", "초기화 과정 중 오류 발생: " + e.getMessage());
+        } finally {
+            db.endTransaction();  // 트랜잭션 종료 (커밋 또는 롤백)
+            db.close();  // DB 연결 해제
+        }
+
 
         //스토리 다음으로 넘어가기
         ((Button)findViewById(R.id.story_btn_next)).setOnClickListener(v -> {
