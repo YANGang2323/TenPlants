@@ -235,7 +235,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="10dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -278,25 +278,25 @@
                     <Button
                         android:id="@+id/oneseed"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="95dp"
                         android:background="@drawable/yellow_bar"
                         android:elevation="10dp"
                         android:foregroundGravity="center"
-                        android:text="randomseed1" />
+                        android:text="초급씨앗" />
 
                     <Button
                         android:id="@+id/twoseed"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="95dp"
                         android:background="@drawable/yellow_bar"
-                        android:text="randomseed2" />
+                        android:text="중급씨앗" />
 
                     <Button
                         android:id="@+id/thrseed"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="95dp"
                         android:background="@drawable/yellow_bar"
-                        android:text="randomseed3" />
+                        android:text="고급씨앗" />
 
                 </LinearLayout>
             </ScrollView>
